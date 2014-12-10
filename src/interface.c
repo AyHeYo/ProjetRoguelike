@@ -290,6 +290,7 @@ Action wait_action() {
 			case 'N':
 				return DENY;
 		}
+		usleep(10000);
 	}
 }
 

@@ -111,7 +111,7 @@ boolean player_can_move(Direction direction);
  * Fonction retournant la vie du joueur.
  * @return La vie du joueur.
  */
-char get_player_life();
+char * get_player_life();
 
 /**
  * Modifie la vie du joueur du montant donné.
