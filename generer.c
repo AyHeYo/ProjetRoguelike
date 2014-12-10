@@ -1,39 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-
-#define TAILLE 30//ordre de la matrice
-
-typedef struct {
-    int ligne;
-    int column;
-} Coordonnee;
-
-typedef struct {
-    int l1;
-    int c1;
-    int l2;
-    int c2;
-} Rectangle;
-
-typedef enum {
-    VIDE = ' ',
-    MUR = '#'
-} Case;
-
-Case labyrinthe[TAILLE][TAILLE];
-
-Rectangle lab_dim = {0, 0, TAILLE - 1, TAILLE - 1};
-
-int random2(int a, int b) {
-    b +=1;
-    return rand() % (b - a) + a;
-}
-
-void initialiser() {
-    srand(time(NULL));
-}
-
 void generer() {
     int i, j, n_salles, s;
     Rectangle * salles;
@@ -60,25 +24,4 @@ void generer() {
             }
         }
     }
-}
-
-
-
-
-void afficher() {
-    int i, j;
-    for (i = 0 ; i < TAILLE ; i++) {
-        for (j = 0 ; j < TAILLE ; j++) {
-            printf("%c", labyrinthe[i][j]);
-        }
-        printf("\n");
-    }
-}
-
-void deplacement() {
-
-}
-
-int gagne() {
-    return 0;
 }
