@@ -9,8 +9,8 @@
 
 #define INTERFACE_H
 
-#include "geo.h"
-#include "roguelike.h"
+#include "../model/roguelike.h"
+#include "../utility/geo.h"
 
 /**
  * Type énuméré définissant les différentes actions voulues par l'utilisateur.

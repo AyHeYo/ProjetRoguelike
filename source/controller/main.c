@@ -9,8 +9,8 @@
 
 #include <stdlib.h>
 
-#include "interface.h"
-#include "roguelike.h"
+#include "../model/roguelike.h"
+#include "../view/interface.h"
 
 /**
  * Fonction principale.

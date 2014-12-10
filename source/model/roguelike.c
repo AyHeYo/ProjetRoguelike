@@ -12,8 +12,9 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "geo.h"
 #include "roguelike.h"
+#include "../utility/geo.h"
+#include "../utility/math.h"
 
 /**
  * Le pointeur vers la matrice de case contenant le labyrinthe.
@@ -77,7 +78,7 @@ void generate_maze() {//fonction de génération via un fichier pour continuer l
 	fclose(file);
 	player_location.line = player_location.row = 2;//placement du joueur, pour l'instant arbitrairement à 2:2
 	maze[player_location.line * maze_dimension.horizontal + player_location.row] = PLAYER;
-	player_life = min(player_life + player_life / 4, MAX_PLAYER_LIFE);
+	player_life = cmin(player_life + player_life / 4, MAX_PLAYER_LIFE);
 }
 
 /*void generate_maze() {//vraie fonction de génération à finir d'implémenter
@@ -138,5 +139,5 @@ char * get_player_life() {
 }
 
 void modify_player_life(char amount) {
-	player_life += amount;
+	player_life = cmin(player_life + amount, MAX_PLAYER_LIFE);
 }

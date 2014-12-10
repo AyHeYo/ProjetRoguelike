@@ -11,30 +11,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/ioctl.h>
-#include <termios.h>
 #include <unistd.h>
 
 #include "ansi.h"
-#include "boolean.h"
-#include "geo.h"
 #include "interface.h"
-#include "roguelike.h"
-
-/**
- * Type renommant termios pour plus de clarté
- */
-typedef struct termios TerminalAttribut;
+#include "terminal.h"
+#include "../model/roguelike.h"
+#include "../utility/boolean.h"
+#include "../utility/geo.h"
 
 /**
  * Variable servant à stocker les attributs du terminal avant le jeu.
  */
-TerminalAttribut before;
-
-/**
- * Variable servant à stocker les attributs du terminal pendant le jeu.
- */
-TerminalAttribut actual;
+TerminalAttributs before;
 
 /**
  * Marge entre la fenre et le bord du terminal.
@@ -81,16 +70,6 @@ void print_square(Square square) {
 			fputs("☻", stdout);
 			break;
 	}
-}
-
-/**
- * Retourne la largeur du terminal en nombre de caractère.
- * @return La largeur du terminal en nombre de caractère.
- */
-short get_terminal_width() {
-	struct winsize size;
-	ioctl(STDOUT_FILENO, TIOCGWINSZ, &size);
-	return size.ws_col;
 }
 
 /**
@@ -175,19 +154,20 @@ void print_window_bottom() {
 }
 
 void init_interface() {
-	tcgetattr(STDIN_FILENO, &before);//sauvegarde des attributs du terminal avant le jeu
+	TerminalAttributs actual;
+	get_terminal_attributs(&before);//sauvegarde des attributs du terminal avant le jeu
 	actual = before;//copie de ces attributs
-#ifdef __APPLE__
-#ifdef TARGET_OS_MAC
-	actual.c_cc[VMIN] = 1;//nombre minimum de caractères pour la lecture à 1
-#endif
-#else
-	actual.c_cc[VMIN] = 0;//nombre minimum de caractères pour la lecture à 0
-#endif
-	actual.c_cc[VTIME] = 0;//temps d'attente lors de la lecture à 0
-	actual.c_lflag &= ~ECHO;//désactivation de l'affichage de la saisie
-	actual.c_lflag &= ~ICANON;//passage en mode non canonique
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, &actual);//appliquation des attributs au terminal
+	#ifdef __APPLE__
+	#ifdef TARGET_OS_MAC
+	set_terminal_min_char(&actual, 1);//nombre minimum de caractères pour la lecture à 1
+	#endif
+	#else
+	set_terminal_min_char(&actual, 0);//nombre minimum de caractères pour la lecture à 0
+	#endif
+	set_terminal_min_time(&actual, 0);//temps d'attente lors de la lecture à 0
+	set_terminal_echo_input(&actual, false);//désactivation de l'affichage de la saisie
+	set_terminal_mode(&actual, false);//passage en mode non canonique
+	set_terminal_attributs(&actual);//appliquation des attributs au terminal
 	ansi_set_bg_color(ANSI_BLACK);
 	ansi_set_font(ANSI_DEFAULT_FONT);
 	ansi_hide_cursor(true);
@@ -200,7 +180,7 @@ void final_interface() {
 	ansi_set_color(ANSI_DEFAULT_COLOR);
 	ansi_set_bg_color(ANSI_DEFAULT_COLOR);
 	ansi_hide_cursor(false);
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, &before);//réappliquation des attributs d'avant le jeu
+	set_terminal_attributs(&before);//réappliquation des attributs d'avant le jeu
 	putchar('\n');
 }
 

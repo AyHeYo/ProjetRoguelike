@@ -9,7 +9,7 @@
 
 #define ANSI_H
 
-#include "boolean.h"
+#include "../utility/boolean.h"
 
 /**
  * Type énuméré définissant les différentes couleurs directement sélectionnables en ANSI.

@@ -11,8 +11,8 @@
 
 #define ROGUELIKE_H
 
-#include "boolean.h"
-#include "geo.h"
+#include "../utility/boolean.h"
+#include "../utility/geo.h"
 
 /**
  * Type énuméré représentant les différents types de case possibles.
