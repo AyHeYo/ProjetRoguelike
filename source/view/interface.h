@@ -86,4 +86,6 @@ Action wait_action();
  */
 void wait_ready();
 
+void cursor_at_top();
+
 #endif

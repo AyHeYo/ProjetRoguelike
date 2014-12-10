@@ -115,5 +115,25 @@ void display_message(char message[]) {
 	print_window_bottom();
 	ansi_clear_screen_after();
 	window_height = NB_LINES_ON_EMPTY_MSG + lines;
-	ansi_previous_line(window_height + WINDOW_TOP_MARGIN + maze_height);
+	cursor_at_top();
+}
+
+void clear_message() {
+	int i;
+	ansi_down(maze_height);
+	for (i = 0 ; i < WINDOW_TOP_MARGIN ; i++) {
+		putchar('\n');
+	}
+	print_window_top();
+	putchar('\n');
+	print_window_line();
+	putchar('\n');
+	print_window_bottom();
+	ansi_clear_screen_after();
+	window_height = NB_LINES_ON_EMPTY_MSG;
+	cursor_at_top();
+}
+
+int get_window_height() {
+	return window_height;
 }

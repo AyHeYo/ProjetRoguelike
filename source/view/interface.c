@@ -141,3 +141,7 @@ Action wait_action() {
 void wait_ready() {
 	fflush(stdout);
 }
+
+void cursor_at_top() {
+	ansi_previous_line(get_window_height() + WINDOW_TOP_MARGIN + maze_height);
+}
