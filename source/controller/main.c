@@ -11,6 +11,7 @@
 
 #include "../model/roguelike.h"
 #include "../view/interface.h"
+#include "../view/window.h"
 
 /**
  * Fonction principale.

@@ -69,17 +69,6 @@ void init_interface();
 void final_interface();
 
 /**
- * Affiche un message à l'utilisateur.
- * @param message Le message à afficher à l'utilisateur.
- */
-void display_message(char message[]);
-
-/**
- * Efface le message affiché à l'utilisateur.
- */
-void clear_message();
-
-/**
  * Affiche le labyrinthe dans son ensemble.
  * @param maze Le pointeur vers la matrice représentant le labyrinthe.
  * @param dimension les dimensions du labyrinthe.
