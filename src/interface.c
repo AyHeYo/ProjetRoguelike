@@ -70,21 +70,15 @@ void print_square(Square square) {
 		case AIR:
 			ansi_set_bg_color(ANSI_BLACK);
 			putchar(' ');
-			ansi_set_bg_color(ANSI_DEFAULT_COLOR);
 			break;
 		case WALL:
 			ansi_set_bg_color(ANSI_LIGHT_GREY);
 			putchar(' ');
-			ansi_set_bg_color(ANSI_DEFAULT_COLOR);
 			break;
 		case PLAYER:
-			ansi_set_bg_color(ANSI_BLACK);
 			ansi_set_color(ANSI_GREEN);
-			ansi_bold(true);
+			ansi_set_bg_color(ANSI_BLACK);
 			fputs("☻", stdout);
-			ansi_bold(false);
-			ansi_set_color(ANSI_DEFAULT_COLOR);
-			ansi_set_bg_color(ANSI_DEFAULT_COLOR);
 			break;
 	}
 }
@@ -105,6 +99,7 @@ short get_terminal_width() {
 void print_window_top() {
 	const int width = get_terminal_width() - 2 * WINDOW_MARGIN;
 	int i;
+	ansi_set_bg_color(ANSI_BLACK);
 	ansi_set_column(WINDOW_MARGIN + 1);
 	ansi_set_color(ANSI_LIGHT_BLUE);
 	fputs("╔", stdout);
@@ -119,6 +114,7 @@ void print_window_top() {
  */
 void print_window_line() {
 	const int width = get_terminal_width() - 2 * WINDOW_MARGIN;
+	ansi_set_bg_color(ANSI_BLACK);
 	ansi_clear_line();
 	ansi_set_column(WINDOW_MARGIN + 1);
 	ansi_set_color(ANSI_LIGHT_BLUE);
@@ -133,6 +129,7 @@ void print_window_line() {
 void print_window_bottom() {
 	const int width = get_terminal_width() - 2 * WINDOW_MARGIN;
 	int i;
+	ansi_set_bg_color(ANSI_BLACK);
 	ansi_set_column(WINDOW_MARGIN + 1);
 	ansi_set_color(ANSI_LIGHT_BLUE);
 	fputs("╠", stdout);
@@ -191,8 +188,7 @@ void init_interface() {
 	actual.c_lflag &= ~ECHO;//désactivation de l'affichage de la saisie
 	actual.c_lflag &= ~ICANON;//passage en mode non canonique
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &actual);//appliquation des attributs au terminal
-	ansi_set_color(ANSI_DEFAULT_COLOR);
-	ansi_set_bg_color(ANSI_DEFAULT_COLOR);
+	ansi_set_bg_color(ANSI_BLACK);
 	ansi_set_font(ANSI_DEFAULT_FONT);
 	ansi_hide_cursor(true);
 	ansi_clear_screen();
@@ -204,7 +200,7 @@ void final_interface() {
 	ansi_set_color(ANSI_DEFAULT_COLOR);
 	ansi_set_bg_color(ANSI_DEFAULT_COLOR);
 	ansi_hide_cursor(false);
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, &before);//réappliquation des atributs d'avant le jeu
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, &before);//réappliquation des attributs d'avant le jeu
 	putchar('\n');
 }
 
@@ -217,6 +213,7 @@ void display_maze(Square * maze, Dimension * dimension) {
 		for (j = 0 ; j < dimension->horizontal ; j++) {
 			print_square(maze[i * dimension->vertical + j]);
 		}
+		ansi_set_bg_color(ANSI_BLACK);
 		putchar('\n');
 	}
 	maze_height = dimension->vertical;
