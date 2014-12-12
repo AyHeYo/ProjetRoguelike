@@ -1,14 +1,15 @@
 /**
- * @file ansi.h
+ * @file view/ansi.h
  * Fichier définissant les fonctions générant des séquences ANSI permettant d'interagir avec le terminal et de modifier la mise en forme du texte.
  * @author Hector Basset
  * @date 1 décembre 2014
  */
 
-#ifndef ANSI_H
+#ifndef VIEW_ANSI_H
 
-#define ANSI_H
+#define VIEW_ANSI_H
 
+//bibliothèques utilitaires
 #include "../utility/boolean.h"
 
 /**

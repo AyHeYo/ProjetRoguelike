@@ -1,13 +1,18 @@
 /**
- * @file ansi.c
+ * @file view/ansi.c
  * Implémentation de ansi.h.
  * @author Hector Basset
  * @date 1 décembre 2014
  */
 
+//bibliothèques du système
 #include <stdio.h>
 
+//bibliothèques de la vue
 #include "ansi.h"
+
+//bibliothèques utilitaires
+#include "../utility/boolean.h"
 
 /**
  * La séquence d'échappement.
