@@ -7,9 +7,9 @@
  * @date 20 novembre 2014
  */
 
-#ifndef ROGUELIKE_H
+#ifndef MODEL_ROGUELIKE_H
 
-#define ROGUELIKE_H
+#define MODEL_ROGUELIKE_H
 
 //librairies utilitaires
 #include "../utility/boolean.h"

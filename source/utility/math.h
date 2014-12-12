@@ -5,9 +5,9 @@
  * @date 10 décembre 2014
  */
 
-#ifndef MATH_H
+#ifndef UTILITY_MATH_H
 
-#define MATH_H
+#define UTILITY_MATH_H
 
 /**
  * Retourne un entier au hasard compris entre a et b inclu.
