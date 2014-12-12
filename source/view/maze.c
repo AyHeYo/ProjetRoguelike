@@ -43,19 +43,19 @@ void print_square(Square square) {
 	}
 }
 
-void display_maze(Square * maze, Dimension * dimension) {
+void display_maze(Square * maze, Dimension dimension) {
 	const int width = get_terminal_width();
 	int i, j;
 	ansi_clear_screen_after();
-	for (i = 0 ; i < dimension->vertical ; i++) {
-		ansi_set_column((width - dimension->horizontal) / 2);
-		for (j = 0 ; j < dimension->horizontal ; j++) {
-			print_square(maze[i * dimension->vertical + j]);
+	for (i = 0 ; i < dimension.vertical ; i++) {
+		ansi_set_column((width - dimension.horizontal) / 2);
+		for (j = 0 ; j < dimension.horizontal ; j++) {
+			print_square(maze[i * dimension.vertical + j]);
 		}
 		ansi_set_bg_color(ANSI_BLACK);
 		putchar('\n');
 	}
-	maze_height = dimension->vertical;
+	maze_height = dimension.vertical;
 	ansi_previous_line(maze_height);
 	clear_message();//on affiche un message vide
 }

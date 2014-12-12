@@ -80,9 +80,9 @@ Square * get_maze();
 
 /**
  * Fonction retournant les dimensions du labyrinthe.
- * @return Le pointeur vers la dimension du labyrinthe.
+ * @return La dimension du labyrinthe.
  */
-Dimension * get_maze_dimension();
+Dimension get_maze_dimension();
 
 /**
  * Fonction générant le labyrinthe.
@@ -91,9 +91,9 @@ void generate_maze();
 
 /**
  * Fonction retournant la localisation du joueur.
- * @return Le pointeur vers la localisation du joueur.
+ * @return La localisation du joueur.
  */
-Location * get_player_location();
+Location get_player_location();
 
 /**
  * Déplace le joueur vers la direction donnée.
@@ -112,7 +112,7 @@ boolean player_can_move(Direction direction);
  * Fonction retournant la vie du joueur.
  * @return La vie du joueur.
  */
-char * get_player_life();
+char get_player_life();
 
 /**
  * Modifie la vie du joueur du montant donné.

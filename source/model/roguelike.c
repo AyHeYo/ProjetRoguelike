@@ -61,8 +61,8 @@ Square * get_maze() {
 	return maze;
 }
 
-Dimension * get_maze_dimension() {
-	return &maze_dimension;
+Dimension get_maze_dimension() {
+	return maze_dimension;
 }
 
 void generate_maze() {//fonction de génération via un fichier pour continuer le développement des autres fonctionnalité en attendant la vraie fonction de génération aléatoire
@@ -100,8 +100,8 @@ void generate_maze() {//fonction de génération via un fichier pour continuer l
 	maze[player_location.line * maze_dimension.horizontal + player_location.row] = PLAYER;
 }*/
 
-Location * get_player_location() {
-	return &player_location;
+Location get_player_location() {
+	return player_location;
 }
 
 void move_player(Direction direction) {
@@ -138,8 +138,8 @@ boolean player_can_move(Direction direction) {
 	}
 }
 
-char * get_player_life() {
-	return &player_life;
+char get_player_life() {
+	return player_life;
 }
 
 void modify_player_life(char amount) {

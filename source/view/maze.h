@@ -15,9 +15,9 @@
 /**
  * Affiche le labyrinthe dans son ensemble.
  * @param maze Le pointeur vers la matrice représentant le labyrinthe.
- * @param dimension les dimensions du labyrinthe.
+ * @param dimension La dimension du labyrinthe.
  */
-void display_maze(Square * maze, Dimension * dimension);
+void display_maze(Square * maze, Dimension dimension);
 
 /**
  * Retourne la hauteur du labyrinthe.
