@@ -88,4 +88,8 @@ void wait_ready();
 
 void cursor_at_top();
 
+int get_maze_window_margin();
+
+int get_maze_height();
+
 #endif

@@ -96,8 +96,8 @@ void print_window_bottom() {
 void display_message(char message[]) {
 	const int width = get_terminal_width() - 2 * WINDOW_MARGIN, length = strlen(message);
 	int i, lines = -1;
-	ansi_down(maze_height);
-	for (i = 0 ; i < WINDOW_TOP_MARGIN ; i++) {
+	ansi_down(get_maze_height());
+	for (i = 0 ; i < get_maze_window_margin() ; i++) {
 		putchar('\n');
 	}
 	print_window_top();
@@ -120,8 +120,8 @@ void display_message(char message[]) {
 
 void clear_message() {
 	int i;
-	ansi_down(maze_height);
-	for (i = 0 ; i < WINDOW_TOP_MARGIN ; i++) {
+	ansi_down(get_maze_height());
+	for (i = 0 ; i < get_maze_window_margin() ; i++) {
 		putchar('\n');
 	}
 	print_window_top();

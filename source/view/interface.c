@@ -24,7 +24,7 @@
 /**
  * Marge entre la fenêtre et le labyrinthe.
  */
-#define MAZE_BOTTOM_MARGIN 2
+#define MAZE_WINDOW_MARGIN 2
 
 /**
  * Variable servant à stocker les attributs du terminal avant le jeu.
@@ -80,7 +80,7 @@ void init_interface() {
 }
 
 void final_interface() {
-	ansi_down(window_height + MAZE_BOTTOM_MARGIN + maze_height);
+	ansi_down(get_window_height() + MAZE_WINDOW_MARGIN + maze_height);
 	putchar('\n');
 	ansi_set_color(ANSI_DEFAULT_COLOR);
 	ansi_set_bg_color(ANSI_DEFAULT_COLOR);
@@ -143,5 +143,13 @@ void wait_ready() {
 }
 
 void cursor_at_top() {
-	ansi_previous_line(get_window_height() + WINDOW_TOP_MARGIN + maze_height);
+	ansi_previous_line(get_window_height() + MAZE_WINDOW_MARGIN + maze_height);
+}
+
+int get_maze_window_margin() {
+	return MAZE_WINDOW_MARGIN;
+}
+
+int get_maze_height() {
+	return maze_height;
 }
