@@ -1,7 +1,15 @@
+/**
+ * @file view/window.h
+ * Fichier implémentant les fonctions permettant de contrôler la fenêtre.
+ * @author Hector Basset
+ * @date 10 décembre 2014
+ */
 
+//librairies du système
 #include <stdio.h>
 #include <string.h>
 
+//librairies de la vue
 #include "ansi.h"
 #include "interface.h"
 #include "maze.h"

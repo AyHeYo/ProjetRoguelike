@@ -1,4 +1,11 @@
+/**
+ * @file utility/math.c
+ * Fichier implémentant les fonctions mathématiques utilitaires.
+ * @author Hector Basset
+ * @date 10 décembre 2014
+ */
 
+//librairies du système
 #include <stdlib.h>
 
 int rand_between(int a, int b) {
@@ -6,6 +13,6 @@ int rand_between(int a, int b) {
 	return (rand() % (b - a)) + a;
 }
 
-char cmin(char a, char b) {
+char minc(char a, char b) {
 	return a < b ? a : b;
 }

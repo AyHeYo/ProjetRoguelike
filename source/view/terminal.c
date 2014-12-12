@@ -1,10 +1,19 @@
+/**
+ * @file view/terminal.c
+ * Fichier implémentant les fonctions permettant de contrôler le terminal.
+ * @author Hector Basset
+ * @date 10 décembre 2014
+ */
 
+//librairies du système
 #include <sys/ioctl.h>
 #include <termios.h>
 #include <unistd.h>
 
+//librairies de la vue
 #include "terminal.h"
 
+//librairies utilitaires
 #include "../utility/boolean.h"
 
 TerminalSize get_terminal_size() {
@@ -38,20 +47,12 @@ void set_terminal_attributs(TerminalAttributs * attributs) {
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, attributs);
 }
 
-boolean get_terminal_mode(TerminalAttributs * attributs) {
-	return (attributs->c_lflag & ICANON) != 0;
-}
-
 void set_terminal_mode(TerminalAttributs * attributs, boolean canonical) {
 	if (canonical) {
 		attributs->c_lflag |= ICANON;
 	} else {
 		attributs->c_lflag &= ~ICANON;
 	}
-}
-
-boolean get_terminal_echo_input(TerminalAttributs * attributs) {
-	return (attributs->c_lflag & ECHO) != 0;
 }
 
 void set_terminal_echo_input(TerminalAttributs * attributs, boolean echo) {
@@ -62,18 +63,10 @@ void set_terminal_echo_input(TerminalAttributs * attributs, boolean echo) {
 	}
 }
 
-int get_terminal_min_char(TerminalAttributs * attributs) {
-	return attributs->c_cc[VMIN];
-}
-
 void set_terminal_min_char(TerminalAttributs * attributs, int min_char) {
 	attributs->c_cc[VMIN] = min_char;
 }
 
-int get_terminal_min_time(TerminalAttributs * attributs) {
-	return attributs->c_cc[VTIME];
-}
-
-void set_terminal_min_time(TerminalAttributs * attributs, int min_time) {
-	attributs->c_cc[VTIME] = min_time;
+void set_terminal_max_time(TerminalAttributs * attributs, int max_time) {
+	attributs->c_cc[VTIME] = max_time;
 }

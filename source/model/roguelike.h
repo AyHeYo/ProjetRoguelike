@@ -1,5 +1,5 @@
 /**
- * @file roguelike.h
+ * @file model/roguelike.h
  * Fichier définissant les types et les fonctions du Roguelike.
  * @author Hector Basset
  * @author Youssef Lamniy
@@ -11,6 +11,7 @@
 
 #define ROGUELIKE_H
 
+//librairies utilitaires
 #include "../utility/boolean.h"
 #include "../utility/geo.h"
 

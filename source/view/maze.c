@@ -1,10 +1,19 @@
+/**
+ * @file view/maze.h
+ * Fichier implémentant les fonctions permettant de contrôler l'affichage du labyrinthe.
+ * @author Hector Basset
+ * @date 12 décembre 2014
+ */
 
+//librairies du système
 #include <stdio.h>
 
+//librairies de la vue
 #include "ansi.h"
 #include "terminal.h"
 #include "window.h"
 
+//librairies du modèle
 #include "../model/roguelike.h"
 
 /**

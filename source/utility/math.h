@@ -1,3 +1,9 @@
+/**
+ * @file utility/math.h
+ * Fichier définissant des fonctions mathématiques utilitaires.
+ * @author Hector Basset
+ * @date 10 décembre 2014
+ */
 
 #ifndef MATH_H
 
@@ -17,6 +23,6 @@ int rand_between(int a, int b);
  * @param b Le deuxième nombre.
  * @return Le plus petit des deux nombres.
  */
-char cmin(char a, char b);
+char minc(char a, char b);
 
 #endif

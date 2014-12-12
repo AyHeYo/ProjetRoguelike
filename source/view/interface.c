@@ -1,6 +1,6 @@
 /**
- * @file interface.c
- * Fichier implémentant l'interface avec l'utilisateur.
+ * @file view/interface.c
+ * Fichier implémentant les actions de base de l'interface avec l'utilisateur.
  * Cette implémentation utilise le terminal.
  * Elle le met en mode non canonique et désactive l'affichage de la saisie afin d'une meilleure interaction avec l'utilisateur.
  * Elle utilise les séquences ANSI pour les couleurs, la mise en forme tu texte et le déplacement du curseur.
@@ -8,17 +8,21 @@
  * @date 1 décembre 2014
  */
 
+//librairies du système
 #include <stdio.h>
 #include <unistd.h>
 
+//librairies de la vue
 #include "ansi.h"
 #include "interface.h"
 #include "maze.h"
 #include "terminal.h"
 #include "window.h"
 
+//librairies du modèle
 #include "../model/roguelike.h"
 
+//librairies utilitaires
 #include "../utility/boolean.h"
 #include "../utility/geo.h"
 
@@ -43,7 +47,7 @@ void init_interface() {
 	#else
 		set_terminal_min_char(&actual, 0);//nombre minimum de caractères pour la lecture à 0
 	#endif
-	set_terminal_min_time(&actual, 0);//temps d'attente lors de la lecture à 0
+	set_terminal_max_time(&actual, 0);//temps d'attente lors de la lecture à 0
 	set_terminal_echo_input(&actual, false);//désactivation de l'affichage de la saisie
 	set_terminal_mode(&actual, false);//passage en mode non canonique
 	set_terminal_attributs(&actual);//appliquation des attributs au terminal

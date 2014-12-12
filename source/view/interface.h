@@ -1,16 +1,18 @@
 /**
- * @file interface.h
- * Fichier définissant l'interface avec l'utilisateur.
+ * @file view/interface.h
+ * Fichier définissant les actions de bases de l'interface avec l'utilisateur.
  * @author Hector Basset
  * @date 1 décembre 2014
  */
 
-#ifndef INTERFACE_H
+#ifndef VIEW_INTERFACE_H
 
-#define INTERFACE_H
+#define VIEW_INTERFACE_H
 
+//librairies du modèle
 #include "../model/roguelike.h"
 
+//librairies utilitaires
 #include "../utility/geo.h"
 
 /**
@@ -76,12 +78,19 @@ void final_interface();
 Action wait_action();
 
 /**
- * Attent que l'interface qoit à jour.
+ * Attent que l'interface soit à jour.
  */
 void wait_ready();
 
+/**
+ * Remet le curseur en haut.
+ */
 void cursor_at_top();
 
+/**
+ * Retourne la marge entre le labyrinthe et la fenêtre.
+ * @return La marge entre le labyrinthe et la fenêtre.
+ */
 int get_maze_window_margin();
 
 #endif

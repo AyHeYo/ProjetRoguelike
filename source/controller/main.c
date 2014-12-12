@@ -1,5 +1,5 @@
 /**
- * @file main.c
+ * @file controller/main.c
  * Fichier de la fonction principale.
  * @author Hector Basset
  * @author Youssef Lamniy
@@ -7,10 +7,13 @@
  * @date 20 novembre 2014
  */
 
+//librairies du système
 #include <stdlib.h>
 
+//librairies du modèle
 #include "../model/roguelike.h"
 
+//librairies de la vue
 #include "../view/interface.h"
 #include "../view/maze.h"
 #include "../view/window.h"

@@ -1,7 +1,13 @@
+/**
+ * @file view/window.h
+ * Fichier définissant les fonctions permettant de contrôler la fenêtre.
+ * @author Hector Basset
+ * @date 10 décembre 2014
+ */
 
-#ifndef WINDOW_H
+#ifndef VIEW_WINDOW_H
 
-#define WINDOW_H
+#define VIEW_WINDOW_H
 
 /**
  * Affiche le haut de la fenêtre.
@@ -29,6 +35,10 @@ void display_message(char message[]);
  */
 void clear_message();
 
+/**
+ * Retourne la hauteur de la fenêtre.
+ * @return a hauteur de la fenêtre.
+ */
 int get_window_height();
 
 #endif
