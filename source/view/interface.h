@@ -10,6 +10,7 @@
 #define INTERFACE_H
 
 #include "../model/roguelike.h"
+
 #include "../utility/geo.h"
 
 /**
@@ -69,13 +70,6 @@ void init_interface();
 void final_interface();
 
 /**
- * Affiche le labyrinthe dans son ensemble.
- * @param maze Le pointeur vers la matrice représentant le labyrinthe.
- * @param dimension les dimensions du labyrinthe.
- */
-void display_maze(Square * maze, Dimension * dimension);
-
-/**
  * Attent que l'utilisateur effectue une action.
  * @return Le type d'action souhaitée par l'utilisateur.
  */
@@ -89,7 +83,5 @@ void wait_ready();
 void cursor_at_top();
 
 int get_maze_window_margin();
-
-int get_maze_height();
 
 #endif

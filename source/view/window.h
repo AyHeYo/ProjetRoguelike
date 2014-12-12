@@ -1,6 +1,8 @@
 
 #ifndef WINDOW_H
 
+#define WINDOW_H
+
 /**
  * Affiche le haut de la fenêtre.
  */
@@ -28,7 +30,5 @@ void display_message(char message[]);
 void clear_message();
 
 int get_window_height();
-
-#define WINDOW_H
 
 #endif

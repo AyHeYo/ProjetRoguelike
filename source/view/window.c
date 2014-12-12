@@ -4,6 +4,7 @@
 
 #include "ansi.h"
 #include "interface.h"
+#include "maze.h"
 #include "terminal.h"
 
 /**

@@ -9,15 +9,16 @@
  */
 
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include <unistd.h>
 
 #include "ansi.h"
 #include "interface.h"
+#include "maze.h"
 #include "terminal.h"
 #include "window.h"
+
 #include "../model/roguelike.h"
+
 #include "../utility/boolean.h"
 #include "../utility/geo.h"
 
@@ -30,33 +31,6 @@
  * Variable servant à stocker les attributs du terminal avant le jeu.
  */
 TerminalAttributs before;
-
-/**
- * Hauteur actuelle du labyrinthe.
- */
-int maze_height = 0;
-
-/**
- * Fonction interne permettant d'afficher une case en fonction de son type.
- * @param square Le type de case à afficher.
- */
-void print_square(Square square) {
-	switch (square) {
-		case AIR:
-			ansi_set_bg_color(ANSI_BLACK);
-			putchar(' ');
-			break;
-		case WALL:
-			ansi_set_bg_color(ANSI_LIGHT_GREY);
-			putchar(' ');
-			break;
-		case PLAYER:
-			ansi_set_color(ANSI_GREEN);
-			ansi_set_bg_color(ANSI_BLACK);
-			fputs("☻", stdout);
-			break;
-	}
-}
 
 void init_interface() {
 	TerminalAttributs actual;
@@ -80,30 +54,13 @@ void init_interface() {
 }
 
 void final_interface() {
-	ansi_down(get_window_height() + MAZE_WINDOW_MARGIN + maze_height);
+	ansi_down(get_window_height() + MAZE_WINDOW_MARGIN + get_maze_height());
 	putchar('\n');
 	ansi_set_color(ANSI_DEFAULT_COLOR);
 	ansi_set_bg_color(ANSI_DEFAULT_COLOR);
 	ansi_hide_cursor(false);
 	set_terminal_attributs(&before);//réappliquation des attributs d'avant le jeu
 	putchar('\n');
-}
-
-void display_maze(Square * maze, Dimension * dimension) {
-	const int width = get_terminal_width();
-	int i, j;
-	ansi_clear_screen_after();
-	for (i = 0 ; i < dimension->vertical ; i++) {
-		ansi_set_column((width - dimension->horizontal) / 2);
-		for (j = 0 ; j < dimension->horizontal ; j++) {
-			print_square(maze[i * dimension->vertical + j]);
-		}
-		ansi_set_bg_color(ANSI_BLACK);
-		putchar('\n');
-	}
-	maze_height = dimension->vertical;
-	ansi_previous_line(maze_height);
-	clear_message();//on affiche un message vide
 }
 
 Action wait_action() {
@@ -143,13 +100,9 @@ void wait_ready() {
 }
 
 void cursor_at_top() {
-	ansi_previous_line(get_window_height() + MAZE_WINDOW_MARGIN + maze_height);
+	ansi_previous_line(get_window_height() + MAZE_WINDOW_MARGIN + get_maze_height());
 }
 
 int get_maze_window_margin() {
 	return MAZE_WINDOW_MARGIN;
-}
-
-int get_maze_height() {
-	return maze_height;
 }

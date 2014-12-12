@@ -10,7 +10,9 @@
 #include <stdlib.h>
 
 #include "../model/roguelike.h"
+
 #include "../view/interface.h"
+#include "../view/maze.h"
 #include "../view/window.h"
 
 /**

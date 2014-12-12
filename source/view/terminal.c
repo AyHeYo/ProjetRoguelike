@@ -4,6 +4,7 @@
 #include <unistd.h>
 
 #include "terminal.h"
+
 #include "../utility/boolean.h"
 
 TerminalSize get_terminal_size() {
