@@ -12,7 +12,7 @@ NAME = roguelike
 ODIR = o
 
 #le nom du dossier contenant les sources
-SRCDIR = src
+SRCDIR = source
 
 #le nom du dossier contenant les sources des tests
 TESTDIR = test
@@ -30,7 +30,7 @@ compile_o:
 	#création du dossier
 	mkdir -p ./$(ODIR)/$(SRCDIR)
 	#on lance gcc depuis ce dossier pour que les .o soient créés dans celui-ci
-	cd ./$(ODIR)/$(SRCDIR); $(CC) $(OPTIONS) -c ./../../$(SRCDIR)/*.c
+	cd ./$(ODIR)/$(SRCDIR); $(CC) $(OPTIONS) -c ./../../$(SRCDIR)/*/*.c
 
 #génère le fichier executable des tests, en liant les .o des tests et du programme, sauf le main qui ne contient que la fonction princiale du programme
 test: test_o
@@ -39,7 +39,7 @@ test: test_o
 #compile les .o des tests
 test_o:
 	mkdir -p ./$(ODIR)/$(TESTDIR)
-	cd ./$(ODIR)/$(TESTDIR); $(CC) $(OPTIONS) -c ./../../$(TESTDIR)/*.c ./../../$(SRCDIR)/*.c
+	cd ./$(ODIR)/$(TESTDIR); $(CC) $(OPTIONS) -c ./../../$(TESTDIR)/*/*.c ./../../$(SRCDIR)/*.c
 	cd ./$(ODIR)/$(TESTDIR); rm main.o
 
 #lance les tests après les avoir compilés
@@ -58,7 +58,7 @@ debug: clean debug_o
 #compilation des .o pour le déboguage avec l'option -g
 debug_o:
 	mkdir -p ./$(ODIR)/$(SRCDIR)
-	cd ./$(ODIR)/$(SRCDIR); $(CC) $(OPTIONS) -g -c ./../../$(SRCDIR)/*.c
+	cd ./$(ODIR)/$(SRCDIR); $(CC) $(OPTIONS) -g -c ./../../$(SRCDIR)/*/*.c
 
 #nettoie le projet des fichiers créés lors de la compilation
 clean:

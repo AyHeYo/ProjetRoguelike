@@ -1,5 +1,5 @@
 /**
- * @file roguelike.h
+ * @file model/roguelike.h
  * Fichier définissant les types et les fonctions du Roguelike.
  * @author Hector Basset
  * @author Youssef Lamniy
@@ -7,12 +7,13 @@
  * @date 20 novembre 2014
  */
 
-#ifndef ROGUELIKE_H
+#ifndef MODEL_ROGUELIKE_H
 
-#define ROGUELIKE_H
+#define MODEL_ROGUELIKE_H
 
-#include "boolean.h"
-#include "geo.h"
+//librairies utilitaires
+#include "../utility/boolean.h"
+#include "../utility/geo.h"
 
 /**
  * Type énuméré représentant les différents types de case possibles.
@@ -111,7 +112,7 @@ boolean player_can_move(Direction direction);
  * Fonction retournant la vie du joueur.
  * @return La vie du joueur.
  */
-char get_player_life();
+char * get_player_life();
 
 /**
  * Modifie la vie du joueur du montant donné.

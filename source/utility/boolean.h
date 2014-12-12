@@ -1,5 +1,5 @@
 /**
- * @file boolean.h
+ * @file utility/boolean.h
  * Fichier définissant un type booléen.
  * @author Hector Basset
  * @date 27 novembre 2014

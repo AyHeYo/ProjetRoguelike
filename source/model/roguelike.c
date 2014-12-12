@@ -1,5 +1,5 @@
 /**
- * @file roguelike.c
+ * @file model/roguelike.c
  * Fichier implémentant les types et les fonctions du Roguelike.
  * @author Hector Basset
  * @author Youssef Lamniy
@@ -7,12 +7,18 @@
  * @date 20 novembre 2014
  */
 
+//librairies du système
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
-#include "geo.h"
+//librairies du modèle
 #include "roguelike.h"
+
+//librairies utilitaires
+#include "../utility/geo.h"
+#include "../utility/math.h"
 
 /**
  * Le pointeur vers la matrice de case contenant le labyrinthe.
@@ -29,11 +35,22 @@ Dimension maze_dimension;
  */
 Location player_location;
 
+/**
+ * La vie du joueur.
+ */
+char player_life;
+
+/**
+ * La vie maximale du joueur.
+ */
+#define MAX_PLAYER_LIFE 100
+
 void init_roguelike() {
 	srand(time(NULL));
 	maze = NULL;
 	maze_dimension.horizontal = maze_dimension.vertical = -1;
 	player_location.line = player_location.row = -1;
+	player_life = MAX_PLAYER_LIFE;
 }
 
 void final_roguelike() {
@@ -65,6 +82,7 @@ void generate_maze() {//fonction de génération via un fichier pour continuer l
 	fclose(file);
 	player_location.line = player_location.row = 2;//placement du joueur, pour l'instant arbitrairement à 2:2
 	maze[player_location.line * maze_dimension.horizontal + player_location.row] = PLAYER;
+	player_life = minc(player_life + player_life / 4, MAX_PLAYER_LIFE);
 }
 
 /*void generate_maze() {//vraie fonction de génération à finir d'implémenter
@@ -120,37 +138,10 @@ boolean player_can_move(Direction direction) {
 	}
 }
 
-/*Rectangle lab_dim = {0, 0, TAILLE - 1, TAILLE - 1};
-
-int random2(int a, int b) {
-	b +=1;
-	return rand() % (b - a) + a;
+char * get_player_life() {
+	return &player_life;
 }
 
-void generer() {//la fonction de génération devient la fonction generate_maze(), continuer ou recopier le code à l'intérieur
-	int i, j, n_salles, s;
-	Rectangle * salles;
-	for (i = 0 ; i < TAILLE ; i++) {
-		for (j = 0 ; j < TAILLE ; j++) {
-			labyrinthe[i][j] = MUR;
-		}
-	}
-	n_salles = random2(3, lab_dim.l2 / 5);
-	salles = (Rectangle *) malloc(n_salles * sizeof(Rectangle));
-	if (random2(0, 1)) {
-		salles[0].l1 = lab_dim.l1 + 1;
-		salles[0].c1 = random2(lab_dim.c1 + 1, lab_dim.c2 / 4);
-	} else {
-		salles[0].l1 = random2(lab_dim.l1 + 1, lab_dim.l2 / 4);
-		salles[0].c1 = lab_dim.c1 + 1;
-	}
-	salles[0].l2 = random2(salles[0].l1 + 4, salles[0].l1 + lab_dim.l2 / 3);
-	salles[0].c2 = random2(salles[0].c1 + 4, salles[0].c1 + lab_dim.c2 / 3);
-	for (s = 0 ; s <= 0 ; s++) {
-		for (i = salles[0].l1 ; i < salles[0].l2 ; i++) {
-			for (j = salles[0].c1 ; j < salles[0].c2 ; j++) {
-				labyrinthe[i][j] = VIDE;
-			}
-		}
-	}
-}*/
+void modify_player_life(char amount) {
+	player_life = minc(player_life + amount, MAX_PLAYER_LIFE);
+}

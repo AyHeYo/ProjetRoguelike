@@ -1,5 +1,5 @@
 /**
- * @file geo.h
+ * @file utility/geo.h
  * Fichier définissant des strucutures de données géométriques.
  * @author Hector Basset
  * @date 2 décembre 2014
