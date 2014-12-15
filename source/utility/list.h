@@ -62,13 +62,13 @@ void list_end(List * list);
 
 /**
  * Se place sur l'élément précédant de la liste.
- * @param list Le liste.
+ * @param list La liste.
  */
 void list_previous(List * list);
 
 /**
  * Se place sur l'élément suivant de la liste.
- * @param list Le liste.
+ * @param list La liste.
  */
 void list_next(List * list);
 
