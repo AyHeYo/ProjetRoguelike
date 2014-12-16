@@ -30,7 +30,7 @@ compile: $(OBJ)
 	$(CC) $(FLAGS) -c $< -o $@
 
 clean:
-	rm -rf $(OBJ) *.exe
+	rm -rf $(SRCDIR)/*/*.o *.exe
 
 run: compile
 	./$(NAME).exe

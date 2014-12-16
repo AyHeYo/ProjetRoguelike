@@ -12,16 +12,30 @@ typedef struct Entity Entity;
 
 typedef enum EntityType EntityType;
 
+typedef enum WeaponType WeaponType;
+
 enum EntityType {
 	PLAYER,
 	GOBLIN,
-	GHOST
+	GHOST,
+	KEY,
+	SWORD,
+	ARROW,
+	BALL
+};
+
+enum WeaponType {
+	NONE,
+	MELEE,
+	RANGED,
+	MAGIC
 };
 
 struct Entity {
 	EntityType type;
 	short max_life;
 	short life;
+	WeaponType weapon;
 	Direction direction;
 	struct Square * square;
 };
@@ -35,5 +49,7 @@ void entity_move(Entity * entity, Direction direction);
 void entity_heal(Entity * entity, short amount);
 
 void entity_hurt(Entity * entity, short amount);
+
+void entity_attack(Entity * entity);
 
 #endif

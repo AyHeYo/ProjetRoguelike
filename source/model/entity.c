@@ -15,16 +15,40 @@ Entity * new_entity(EntityType type) {
 		case PLAYER:
 			entity->max_life = 100;
 			entity->life = 100;
+			entity->weapon = RANGED;
 			break;
 		case GOBLIN:
 			entity->max_life = 20;
 			entity->life = 20;
+			entity->weapon = MELEE;
 			break;
 		case GHOST:
 			entity->max_life = 35;
 			entity->life = 35;
+			entity->weapon = NONE;
+			break;
+		case KEY:
+			entity->max_life = 1;
+			entity->life = 1;
+			entity->weapon = NONE;
+			break;
+		case SWORD:
+			entity->max_life = 1;
+			entity->life = 1;
+			entity->weapon = NONE;
+			break;
+		case ARROW:
+			entity->max_life = 1;
+			entity->life = 1;
+			entity->weapon = NONE;
+			break;
+		case BALL:
+			entity->max_life = 1;
+			entity->life = 1;
+			entity->weapon = NONE;
 			break;
 	}
+	return entity;
 }
 
 boolean entity_can_move(Entity * entity, Direction direction) {
@@ -89,4 +113,17 @@ void entity_heal(Entity * entity, short amount) {
 
 void entity_hurt(Entity * entity, short amount) {
 	entity->life = maxs(entity->life - amount, 0);
+}
+
+void entity_attack(Entity * entity) {
+	switch (entity->weapon) {
+		case NONE:
+			break;
+		case MELEE:
+			break;
+		case RANGED:
+			break;
+		case MAGIC:
+			break;
+	}
 }

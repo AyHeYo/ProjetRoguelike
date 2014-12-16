@@ -18,6 +18,7 @@
 #include "roguelike.h"
 
 //librairies utilitaires
+#include "../utility/direction.h"
 #include "../utility/geo.h"
 #include "../utility/math.h"
 
@@ -44,4 +45,5 @@ void new_level() {//fonction de génération via un fichier pour continuer le d�
 	} while (g_maze->squares[row * g_maze->size + column].type != AIR);
 	g_maze->squares[row * g_maze->size + column].entity = g_player;
 	g_player->square = &(g_maze->squares[row * g_maze->size + column]);
+	g_player->direction = NORTH;
 }
