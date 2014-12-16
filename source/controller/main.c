@@ -11,6 +11,8 @@
 #include <stdlib.h>
 
 //librairies du modèle
+#include "../model/entity.h"
+#include "../model/player.h"
 #include "../model/roguelike.h"
 
 //librairies de la vue
@@ -25,37 +27,42 @@
 int main() {//pour l'instant, fonction main pour tester l'interface et la génération
 	init_roguelike();
 	init_interface();
-	generate_maze();
+	new_level();
 	while (1) {
-		display_maze(get_maze(), get_maze_dimension());
+		display_maze();
 		switch (wait_action()) {
 			case TOP:
-				if (player_can_move(NORTH)) {
-					move_player(NORTH);
+				g_player->direction = NORTH;
+				if (entity_can_move(g_player, NORTH)) {
+					entity_move(g_player, NORTH);
 				}
 				break;
 			case BOTTOM:
-				if (player_can_move(SOUTH)) {
-					move_player(SOUTH);
+				g_player->direction = SOUTH;
+				if (entity_can_move(g_player, SOUTH)) {
+					entity_move(g_player, SOUTH);
 				}
 				break;
 			case RIGHT:
-				if (player_can_move(EAST)) {
-					move_player(EAST);
+				g_player->direction = EAST;
+				if (entity_can_move(g_player, EAST)) {
+					entity_move(g_player, EAST);
 				}
 				break;
 			case LEFT:
-				if (player_can_move(WEST)) {
-					move_player(WEST);
+				g_player->direction = WEST;
+				if (entity_can_move(g_player, WEST)) {
+					entity_move(g_player, WEST);
 				}
+				break;
+			case HIT:
+				entity_attack(g_player);
 				break;
 			case EXIT:
 				display_message("Au revoir !");
 				final_interface();
 				final_roguelike();
 				return EXIT_SUCCESS;
-			default:
-				break;
 		}
 	}
 }

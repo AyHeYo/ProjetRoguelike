@@ -1,5 +1,5 @@
 *~
 ._*
-*.o
+source/*/*.o
 *.exe
 doc/*
