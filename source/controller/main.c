@@ -11,6 +11,8 @@
 #include <stdlib.h>
 
 //librairies du modèle
+#include "../model/entity.h"
+#include "../model/player.h"
 #include "../model/roguelike.h"
 
 //librairies de la vue
@@ -25,28 +27,28 @@
 int main() {//pour l'instant, fonction main pour tester l'interface et la génération
 	init_roguelike();
 	init_interface();
-	generate_maze();
+	generate();
 	while (1) {
-		display_maze(get_maze(), get_maze_dimension());
+		display_maze();
 		switch (wait_action()) {
 			case TOP:
-				if (player_can_move(NORTH)) {
-					move_player(NORTH);
+				if (entity_can_move(g_player, NORTH)) {
+					entity_move(g_player, NORTH);
 				}
 				break;
 			case BOTTOM:
-				if (player_can_move(SOUTH)) {
-					move_player(SOUTH);
+				if (entity_can_move(g_player, SOUTH)) {
+					entity_move(g_player, SOUTH);
 				}
 				break;
 			case RIGHT:
-				if (player_can_move(EAST)) {
-					move_player(EAST);
+				if (entity_can_move(g_player, EAST)) {
+					entity_move(g_player, EAST);
 				}
 				break;
 			case LEFT:
-				if (player_can_move(WEST)) {
-					move_player(WEST);
+				if (entity_can_move(g_player, WEST)) {
+					entity_move(g_player, WEST);
 				}
 				break;
 			case EXIT:

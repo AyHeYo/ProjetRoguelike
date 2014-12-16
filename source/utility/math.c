@@ -13,6 +13,10 @@ int rand_between(int a, int b) {
 	return (rand() % (b - a)) + a;
 }
 
-char minc(char a, char b) {
+char mins(short a, short b) {
 	return a < b ? a : b;
+}
+
+char maxs(short a, short b) {
+	return a > b ? a : b;
 }

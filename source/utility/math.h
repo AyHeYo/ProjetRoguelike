@@ -18,11 +18,13 @@
 int rand_between(int a, int b);
 
 /**
- * Retourne le plus petit de deux nombres entiers codés sur un char.
+ * Retourne le plus petit de deux nombres entiers codés sur un short.
  * @param a Le premier nombre.
  * @param b Le deuxième nombre.
  * @return Le plus petit des deux nombres.
  */
-char minc(char a, char b);
+char mins(short a, short b);
+
+char maxs(short a, short b);
 
 #endif

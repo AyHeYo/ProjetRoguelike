@@ -9,15 +9,10 @@
 
 #define VIEW_MAZE_H
 
-//librairies du modèle
-#include "../model/roguelike.h"
-
 /**
  * Affiche le labyrinthe dans son ensemble.
- * @param maze Le pointeur vers la matrice représentant le labyrinthe.
- * @param dimension La dimension du labyrinthe.
  */
-void display_maze(Square * maze, Dimension dimension);
+void display_maze();
 
 /**
  * Retourne la hauteur du labyrinthe.

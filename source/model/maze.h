@@ -1,14 +1,13 @@
 
+#ifndef MODEL_MAZE_H
+
+#define MODEL_MAZE_H
+
 #include "entity.h"
 
 typedef struct Square Square;
 
 typedef enum SquareType SquareType;
-
-struct Square {
-	SquareType type;
-	Entity * entity;
-}
 
 enum SquareType {
 	AIR,
@@ -17,11 +16,23 @@ enum SquareType {
 	FIRE
 };
 
+struct Square {
+	SquareType type;
+	struct Entity * entity;
+};
+
 typedef struct {
 	Square * squares;
 	unsigned short size;
 } Maze;
 
-Maze * generate_maze(Maze * maze);
+/**
+ * Le pointeur vers la matrice de case contenant le labyrinthe.
+ */
+Maze * g_maze;
 
-void free_maze(Maze * maze);
+void generate_maze();
+
+void free_maze();
+
+#endif
