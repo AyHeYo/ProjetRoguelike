@@ -14,6 +14,7 @@
 
 //librairies du modèle
 #include "maze.h"
+#include "player.h"
 #include "roguelike.h"
 
 //librairies utilitaires
@@ -25,6 +26,7 @@ unsigned short level;
 void init_roguelike() {
 	srand(time(NULL));
 	g_maze = NULL;
+	g_player = new_entity(PLAYER);
 	level = 0;
 }
 
@@ -32,7 +34,7 @@ void final_roguelike() {
 	free_maze();//libération de l'espace mémoire alloué au labyrinthe, inutile de vérifier si NULL car free(NULL) n'a tout simplement aucun effet
 }
 
-void generate() {//fonction de génération via un fichier pour continuer le développement des autres fonctionnalité en attendant la vraie fonction de génération aléatoire
+void new_level() {//fonction de génération via un fichier pour continuer le développement des autres fonctionnalité en attendant la vraie fonction de génération aléatoire
 	short row, column;
 	level++;
 	generate_maze();
@@ -40,5 +42,6 @@ void generate() {//fonction de génération via un fichier pour continuer le dé
 		row = rand_between(0, g_maze->size - 1);
 		column = rand_between(0, g_maze->size - 1);
 	} while (g_maze->squares[row * g_maze->size + column].type != AIR);
-	//maze->squares[row * maze->size + column];
+	g_maze->squares[row * g_maze->size + column].entity = g_player;
+	g_player->square = &(g_maze->squares[row * g_maze->size + column]);
 }

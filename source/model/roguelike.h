@@ -27,6 +27,6 @@ void init_roguelike();
  */
 void final_roguelike();
 
-void generate();
+void new_level();
 
 #endif

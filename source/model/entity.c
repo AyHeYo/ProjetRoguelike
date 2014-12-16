@@ -8,6 +8,25 @@
 #include "../utility/direction.h"
 #include "../utility/math.h"
 
+Entity * new_entity(EntityType type) {
+	Entity * entity = malloc(sizeof(Entity));
+	entity->type = type;
+	switch (type) {
+		case PLAYER:
+			entity->max_life = 100;
+			entity->life = 100;
+			break;
+		case GOBLIN:
+			entity->max_life = 20;
+			entity->life = 20;
+			break;
+		case GHOST:
+			entity->max_life = 35;
+			entity->life = 35;
+			break;
+	}
+}
+
 boolean entity_can_move(Entity * entity, Direction direction) {
 	Square * square;
 	switch (direction) {
@@ -19,7 +38,7 @@ boolean entity_can_move(Entity * entity, Direction direction) {
 				 break;
 			}
 		case SOUTH:
-			if ((entity->square + g_maze->size) < (g_maze->squares + g_maze->size * g_maze->size)) {
+			if ((entity->square + g_maze->size) >= (g_maze->squares + g_maze->size * g_maze->size)) {
 				return false;
 			} else {
 				square = entity->square + g_maze->size;
@@ -40,7 +59,7 @@ boolean entity_can_move(Entity * entity, Direction direction) {
 				break;
 			}
 	}
-	return (square->entity == NULL) && (square->type != WALL);
+	return (square->type != WALL) && (square->entity == NULL);
 }
 
 void entity_move(Entity * entity, Direction direction) {
@@ -48,12 +67,16 @@ void entity_move(Entity * entity, Direction direction) {
 	switch (direction) {
 		case NORTH:
 			square = entity->square - g_maze->size;
+			break;
 		case SOUTH:
 			square = entity->square + g_maze->size;
+			break;
 		case EAST:
 			square = entity->square + 1;
+			break;
 		case WEST:
 			square = entity->square - 1;
+			break;
 	}
 	square->entity = entity;
 	entity->square->entity = NULL;

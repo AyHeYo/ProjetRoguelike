@@ -33,7 +33,7 @@ clean:
 	rm -rf $(OBJ) *.exe
 
 run: compile
-	./$(NAME)
+	./$(NAME).exe
 
 debug:
 	$(CC) $(FLAGS) -g $(SRC) -o $(NAME)

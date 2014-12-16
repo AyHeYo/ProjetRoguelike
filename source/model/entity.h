@@ -26,6 +26,8 @@ struct Entity {
 	struct Square * square;
 };
 
+Entity * new_entity(EntityType type);
+
 boolean entity_can_move(Entity * entity, Direction direction);
 
 void entity_move(Entity * entity, Direction direction);

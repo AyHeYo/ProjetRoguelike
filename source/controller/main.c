@@ -27,7 +27,7 @@
 int main() {//pour l'instant, fonction main pour tester l'interface et la génération
 	init_roguelike();
 	init_interface();
-	generate();
+	new_level();
 	while (1) {
 		display_maze();
 		switch (wait_action()) {
