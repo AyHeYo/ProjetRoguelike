@@ -23,7 +23,7 @@ TESTDIR = test
 #le nom du dossier contenant la documentation
 DOCDIR = doc
 
-compile: $(OBJ)
+build: $(OBJ)
 	$(CC) $(FLAGS) $^ -o $(NAME).exe
 
 %.o: %.c
@@ -32,7 +32,9 @@ compile: $(OBJ)
 clean:
 	rm -rf $(SRCDIR)/*/*.o *.exe
 
-run: compile
+rebuild: clean build
+
+run: build
 	./$(NAME).exe
 
 debug:
@@ -52,7 +54,7 @@ docpost: docgen
 	cp -R $(DOCDIR)/html/* ~/public_html/$(NAME)
 	chmod -R 755 ~/public_html/$(NAME)
 
-all: clean compile docgen
+all: clean build docgen
 
 commit: clean
 	git add *

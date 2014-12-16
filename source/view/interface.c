@@ -9,7 +9,9 @@
  */
 
 //librairies du système
+#include <pthread.h>
 #include <stdio.h>
+#include <time.h>
 #include <unistd.h>
 
 //librairies de la vue
@@ -109,4 +111,17 @@ void cursor_at_top() {
 
 int get_maze_window_margin() {
 	return MAZE_WINDOW_MARGIN;
+}
+
+pthread_t interface_thread;
+
+void * interface_routine(void * arg) {
+	clock_t now = clock();
+	while (((clock() - now) / CLOCKS_PER_SEC) * 1000 < 100) {
+	}
+	display_maze();
+}
+
+void start_interface() {
+	
 }
