@@ -14,6 +14,7 @@
 #include "interface.h"
 #include "maze.h"
 #include "terminal.h"
+#include "window.h"
 
 /**
  * Marge entre la fenre et le bord du terminal.
@@ -25,10 +26,7 @@
  */
 #define NB_LINES_ON_EMPTY_MSG 5
 
-/**
- * Hauteur actuelle de la fenêtre.
- */
-int window_height;
+char * message;
 
 void print_window_top() {
 	const int width = get_terminal_width() - 2 * WINDOW_MARGIN;
@@ -102,13 +100,17 @@ void print_window_bottom() {
 	fputs("╝", stdout);
 }
 
-void display_message(char message[]) {
+void set_message(char msg[]) {
+	message = msg;
+}
+
+void clear_message() {
+	message = " ";
+}
+
+void display_message() {
 	const int width = get_terminal_width() - 2 * WINDOW_MARGIN, length = strlen(message);
 	int i, lines = -1;
-	ansi_down(get_maze_height());
-	for (i = 0 ; i < get_maze_window_margin() ; i++) {
-		putchar('\n');
-	}
 	print_window_top();
 	for (i = 0 ; i < length ; i++) {
 		if (i % (width - 4) == 0) {
@@ -122,27 +124,5 @@ void display_message(char message[]) {
 	}
 	putchar('\n');
 	print_window_bottom();
-	ansi_clear_screen_after();
-	window_height = NB_LINES_ON_EMPTY_MSG + lines;
-	cursor_at_top();
-}
-
-void clear_message() {
-	int i;
-	ansi_down(get_maze_height());
-	for (i = 0 ; i < get_maze_window_margin() ; i++) {
-		putchar('\n');
-	}
-	print_window_top();
-	putchar('\n');
-	print_window_line();
-	putchar('\n');
-	print_window_bottom();
-	ansi_clear_screen_after();
-	window_height = NB_LINES_ON_EMPTY_MSG;
-	cursor_at_top();
-}
-
-int get_window_height() {
-	return window_height;
+	g_window_height = NB_LINES_ON_EMPTY_MSG + lines;
 }

@@ -10,16 +10,12 @@
 
 //librairies de la vue
 #include "ansi.h"
+#include "maze.h"
 #include "terminal.h"
 #include "window.h"
 
 //librairies du modèle
 #include "../model/maze.h"
-
-/**
- * Hauteur actuelle du labyrinthe.
- */
-int maze_height = 0;
 
 /**
  * Fonction interne permettant d'afficher une case en fonction de son type.
@@ -63,7 +59,6 @@ static void print_square(Square * square) {
 void display_maze() {
 	const int width = get_terminal_width();
 	int i, j;
-	ansi_clear_screen_after();
 	for (i = 0 ; i < g_maze->size ; i++) {
 		ansi_set_column((width - g_maze->size) / 2);
 		for (j = 0 ; j < g_maze->size ; j++) {
@@ -72,11 +67,5 @@ void display_maze() {
 		ansi_set_bg_color(ANSI_BLACK);
 		putchar('\n');
 	}
-	maze_height = g_maze->size;
-	ansi_previous_line(maze_height);
-	clear_message();//on affiche un message vide
-}
-
-int get_maze_height() {
-	return maze_height;
+	g_maze_height = g_maze->size;
 }

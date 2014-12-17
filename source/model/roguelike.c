@@ -10,7 +10,6 @@
 //librairies du système
 #include <math.h>
 #include <stdlib.h>
-#include <time.h>
 
 //librairies du modèle
 #include "maze.h"
@@ -21,11 +20,12 @@
 #include "../utility/direction.h"
 #include "../utility/geo.h"
 #include "../utility/math.h"
+#include "../utility/time.h"
 
 unsigned short level;
 
 void init_roguelike() {
-	srand(time(NULL));
+	srand(utime(NULL));
 	g_maze = NULL;
 	g_player = new_entity(PLAYER);
 	level = 0;

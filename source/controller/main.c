@@ -26,10 +26,9 @@
  */
 int main() {//pour l'instant, fonction main pour tester l'interface et la génération
 	init_roguelike();
-	init_interface();
 	new_level();
+	init_interface();
 	while (1) {
-		display_maze();
 		switch (wait_action()) {
 			case TOP:
 				g_player->direction = NORTH;
@@ -59,7 +58,7 @@ int main() {//pour l'instant, fonction main pour tester l'interface et la géné
 				entity_attack(g_player);
 				break;
 			case EXIT:
-				display_message("Au revoir !");
+				set_message("Au revoir !");
 				final_interface();
 				final_roguelike();
 				return EXIT_SUCCESS;
