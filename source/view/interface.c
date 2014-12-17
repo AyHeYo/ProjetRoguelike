@@ -11,7 +11,6 @@
 //librairies du système
 #include <pthread.h>
 #include <stdio.h>
-#include <time.h>
 #include <unistd.h>
 
 //librairies de la vue
@@ -38,6 +37,30 @@
  */
 TerminalAttributs before;
 
+static pthread_t interface_thread;
+static boolean stop_thread;
+
+static void * interface_routine(void * arg) {
+	int i;
+	(void) arg;
+	while (1) {
+		ansi_clear_screen_after();
+		display_maze();
+		for (i = 0 ; i < MAZE_WINDOW_MARGIN ; i++) {
+			putchar('\n');
+		}
+		display_message();
+		ansi_previous_line(g_window_height + MAZE_WINDOW_MARGIN + g_maze_height);
+		fflush(stdout);
+		if (stop_thread) {
+			pthread_exit(NULL);
+			return NULL;
+		} else {
+			usleep(60000);
+		}
+	}
+}
+
 void init_interface() {
 	TerminalAttributs actual;
 	get_terminal_attributs(&before);//sauvegarde des attributs du terminal avant le jeu
@@ -57,10 +80,17 @@ void init_interface() {
 	ansi_set_font(ANSI_DEFAULT_FONT);
 	ansi_hide_cursor(true);
 	ansi_clear_screen();
+	g_maze_height = 0;
+	g_window_height = 0;
+	clear_message();
+	stop_thread = false;
+	pthread_create(&interface_thread, NULL, &interface_routine, NULL);
 }
 
 void final_interface() {
-	ansi_down(get_window_height() + MAZE_WINDOW_MARGIN + get_maze_height());
+	stop_thread = true;
+	pthread_join(interface_thread, NULL);
+	ansi_down(g_window_height + MAZE_WINDOW_MARGIN + g_maze_height);
 	putchar('\n');
 	ansi_set_color(ANSI_DEFAULT_COLOR);
 	ansi_set_bg_color(ANSI_DEFAULT_COLOR);
@@ -103,25 +133,4 @@ Action wait_action() {
 
 void wait_ready() {
 	fflush(stdout);
-}
-
-void cursor_at_top() {
-	ansi_previous_line(get_window_height() + MAZE_WINDOW_MARGIN + get_maze_height());
-}
-
-int get_maze_window_margin() {
-	return MAZE_WINDOW_MARGIN;
-}
-
-pthread_t interface_thread;
-
-void * interface_routine(void * arg) {
-	clock_t now = clock();
-	while (((clock() - now) / CLOCKS_PER_SEC) * 1000 < 100) {
-	}
-	display_maze();
-}
-
-void start_interface() {
-	
 }

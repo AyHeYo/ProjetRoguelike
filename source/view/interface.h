@@ -82,15 +82,4 @@ Action wait_action();
  */
 void wait_ready();
 
-/**
- * Remet le curseur en haut.
- */
-void cursor_at_top();
-
-/**
- * Retourne la marge entre le labyrinthe et la fenêtre.
- * @return La marge entre le labyrinthe et la fenêtre.
- */
-int get_maze_window_margin();
-
 #endif

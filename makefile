@@ -23,8 +23,10 @@ TESTDIR = test
 #le nom du dossier contenant la documentation
 DOCDIR = doc
 
+LIBS = -lpthread
+
 build: $(OBJ)
-	$(CC) $(FLAGS) $^ -o $(NAME).exe
+	$(CC) $(FLAGS) $^ $(LIBS) -o $(NAME).exe
 
 %.o: %.c
 	$(CC) $(FLAGS) -c $< -o $@

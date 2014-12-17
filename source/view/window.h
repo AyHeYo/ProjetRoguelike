@@ -9,6 +9,8 @@
 
 #define VIEW_WINDOW_H
 
+int g_window_height;
+
 /**
  * Affiche le haut de la fenêtre.
  */
@@ -28,17 +30,13 @@ void print_window_bottom();
  * Affiche un message à l'utilisateur.
  * @param message Le message à afficher à l'utilisateur.
  */
-void display_message(char message[]);
+void set_message(char message[]);
 
 /**
  * Efface le message affiché à l'utilisateur.
  */
 void clear_message();
 
-/**
- * Retourne la hauteur de la fenêtre.
- * @return a hauteur de la fenêtre.
- */
-int get_window_height();
+void display_message();
 
 #endif
