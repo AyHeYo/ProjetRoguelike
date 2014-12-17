@@ -35,14 +35,26 @@
 /**
  * Variable servant à stocker les attributs du terminal avant le jeu.
  */
-TerminalAttributs before;
+static TerminalAttributs before;
 
+/**
+ * Thread de l'affichage.
+ */
 static pthread_t interface_thread;
+
+/**
+ * Si le thread de l'affichage soit s'arrêter.
+ */
 static boolean stop_thread;
 
+/**
+ * La fonction executée par le thread de l'affchage.
+ * @param arg Ne prend pas d'argument.
+ * @return Ne retourne rien.
+ */
 static void * interface_routine(void * arg) {
 	int i;
-	(void) arg;
+	(void) arg;//pas s'argument
 	while (1) {
 		ansi_clear_screen_after();
 		display_maze();
@@ -54,7 +66,6 @@ static void * interface_routine(void * arg) {
 		fflush(stdout);
 		if (stop_thread) {
 			pthread_exit(NULL);
-			return NULL;
 		} else {
 			usleep(60000);
 		}

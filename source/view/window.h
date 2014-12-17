@@ -9,6 +9,9 @@
 
 #define VIEW_WINDOW_H
 
+/**
+ * La hauteur actuelle de la fenêtre.
+ */
 int g_window_height;
 
 /**

@@ -11,11 +11,17 @@
 
 #define MODEL_ROGUELIKE_H
 
+//librairies du modèle
 #include "maze.h"
 
 //librairies utilitaires
 #include "../utility/boolean.h"
 #include "../utility/geo.h"
+
+/**
+ * Le niveau actuel.
+ */
+int g_level;
 
 /**
  * Fonction initialisant le jeu, ne doit être appellée qu'une seule fois et avant toutes les autres relatives au jeu.
@@ -27,6 +33,9 @@ void init_roguelike();
  */
 void final_roguelike();
 
+/**
+ * Créé un nouveau niveau.
+ */
 void new_level();
 
 #endif

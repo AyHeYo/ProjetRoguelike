@@ -1,5 +1,5 @@
 /**
- * @file view/window.h
+ * @file view/window.c
  * Fichier implémentant les fonctions permettant de contrôler la fenêtre.
  * @author Hector Basset
  * @date 10 décembre 2014
@@ -12,7 +12,6 @@
 //librairies de la vue
 #include "ansi.h"
 #include "interface.h"
-#include "maze.h"
 #include "terminal.h"
 #include "window.h"
 
@@ -26,7 +25,10 @@
  */
 #define NB_LINES_ON_EMPTY_MSG 5
 
-char * message;
+/**
+ * Le message actuel affiché dans la fenêtre.
+ */
+static char * message;
 
 void print_window_top() {
 	const int width = get_terminal_width() - 2 * WINDOW_MARGIN;
