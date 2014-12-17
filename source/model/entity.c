@@ -1,9 +1,18 @@
+/**
+ * @file model/entity.c
+ * Fichier implémentant les fonctions permettant la création, la supression et la gestion des entité.
+ * @author Hector Basset
+ * @date 16 décembre 2014
+ */
 
+//librairies du système
 #include <stdlib.h>
 
+//librairies du modèle
 #include "entity.h"
 #include "maze.h"
 
+//librairies utilitaires
 #include "../utility/boolean.h"
 #include "../utility/direction.h"
 #include "../utility/math.h"

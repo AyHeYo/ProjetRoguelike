@@ -8,7 +8,6 @@
  */
 
 //librairies du système
-#include <math.h>
 #include <stdlib.h>
 
 //librairies du modèle
@@ -22,23 +21,24 @@
 #include "../utility/math.h"
 #include "../utility/time.h"
 
-unsigned short level;
-
 void init_roguelike() {
 	srand(utime(NULL));
 	g_maze = NULL;
-	g_player = new_entity(PLAYER);
-	level = 0;
+	g_player = new_entity(PLAYER);//céation du joueur
+	g_level = 0;
 }
 
 void final_roguelike() {
-	free_maze();//libération de l'espace mémoire alloué au labyrinthe, inutile de vérifier si NULL car free(NULL) n'a tout simplement aucun effet
+	free_maze();//libération de l'espace mémoire alloué au labyrinthe
 }
 
-void new_level() {//fonction de génération via un fichier pour continuer le développement des autres fonctionnalité en attendant la vraie fonction de génération aléatoire
+void new_level() {
 	short row, column;
-	level++;
+	//niveau supérieur
+	g_level++;
+	//génération du labyrinthe
 	generate_maze();
+	//placement du joueur
 	do {
 		row = rand_between(0, g_maze->size - 1);
 		column = rand_between(0, g_maze->size - 1);
@@ -46,4 +46,5 @@ void new_level() {//fonction de génération via un fichier pour continuer le d�
 	g_maze->squares[row * g_maze->size + column].entity = g_player;
 	g_player->square = &(g_maze->squares[row * g_maze->size + column]);
 	g_player->direction = NORTH;
+	//placement des monstres
 }

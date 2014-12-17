@@ -62,6 +62,8 @@ int main() {//pour l'instant, fonction main pour tester l'interface et la géné
 				final_interface();
 				final_roguelike();
 				return EXIT_SUCCESS;
+			default:
+				break;
 		}
 	}
 }

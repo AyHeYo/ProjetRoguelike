@@ -1,12 +1,30 @@
+/**
+ * @file model/maze.c
+ * Fichier implémentant les fonctions permettant la création, la supression et la gestion du labyrinthe et de ses cases.
+ * @author Hector Basset
+ * @date 16 décembre 2014
+ */
 
+//librairies du système
 #include <stdlib.h>
 
+//librairies du modèle
 #include "maze.h"
 
+/**
+ * La taille minimum (taille du niveau 1).
+ */
 #define MIN_SIZE 30
 
+/**
+ * La vitesse d'accroissement de la taille du labyrinthe.
+ */
 #define GROWING_SPEED 1.1
 
+/**
+ * Fonction libérant l'espace mémoire occupé par les cases du labyrinthe.
+ * Cette fonction détruit aussi les entités se trouvant sur ces cases.
+ */
 static void free_squares() {
 	short row, column;
 	for (row = 0 ; row < g_maze->size ; row++) {

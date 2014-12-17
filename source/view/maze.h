@@ -9,6 +9,9 @@
 
 #define VIEW_MAZE_H
 
+/**
+ * La hauteur actuelle du labyrinthe dans l'affichage.
+ */
 int g_maze_height;
 
 /**

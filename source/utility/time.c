@@ -1,4 +1,11 @@
+/**
+ * @file utility/time.c
+ * Fichier implémentant des fonctions simplifiant certaines fonctionnalités en rapport au temps.
+ * @author Hector Basset
+ * @date 17 décembre 2014
+ */
 
+//librairies du système
 #include <stdlib.h>
 #include <sys/time.h>
 

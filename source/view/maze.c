@@ -1,5 +1,5 @@
 /**
- * @file view/maze.h
+ * @file view/maze.c
  * Fichier implémentant les fonctions permettant de contrôler l'affichage du labyrinthe.
  * @author Hector Basset
  * @date 12 décembre 2014
@@ -12,13 +12,12 @@
 #include "ansi.h"
 #include "maze.h"
 #include "terminal.h"
-#include "window.h"
 
 //librairies du modèle
 #include "../model/maze.h"
 
 /**
- * Fonction interne permettant d'afficher une case en fonction de son type.
+ * Fonction permettant d'afficher une case en fonction de son type.
  * @param square Le type de case à afficher.
  */
 static void print_square(Square * square) {
@@ -51,6 +50,8 @@ static void print_square(Square * square) {
 			case GHOST:
 				ansi_set_color(ANSI_WHITE);
 				fputs("⚇", stdout);
+				break;
+			default:
 				break;
 		}
 	}
