@@ -1,16 +1,19 @@
 /**
- * @file interface.h
- * Fichier définissant l'interface avec l'utilisateur.
+ * @file view/interface.h
+ * Fichier définissant les actions de bases de l'interface avec l'utilisateur.
  * @author Hector Basset
  * @date 1 décembre 2014
  */
 
-#ifndef INTERFACE_H
+#ifndef VIEW_INTERFACE_H
 
-#define INTERFACE_H
+#define VIEW_INTERFACE_H
 
-#include "geo.h"
-#include "roguelike.h"
+//librairies du modèle
+#include "../model/roguelike.h"
+
+//librairies utilitaires
+#include "../utility/geo.h"
 
 /**
  * Type énuméré définissant les différentes actions voulues par l'utilisateur.
@@ -69,31 +72,13 @@ void init_interface();
 void final_interface();
 
 /**
- * Affiche un message à l'utilisateur.
- * @param message Le message à afficher à l'utilisateur.
- */
-void display_message(char message[]);
-
-/**
- * Efface le message affiché à l'utilisateur.
- */
-void clear_message();
-
-/**
- * Affiche le labyrinthe dans son ensemble.
- * @param maze Le pointeur vers la matrice représentant le labyrinthe.
- * @param dimension les dimensions du labyrinthe.
- */
-void display_maze(Square * maze, Dimension * dimension);
-
-/**
  * Attent que l'utilisateur effectue une action.
  * @return Le type d'action souhaitée par l'utilisateur.
  */
 Action wait_action();
 
 /**
- * Attent que l'interface qoit à jour.
+ * Attent que l'interface soit à jour.
  */
 void wait_ready();
 

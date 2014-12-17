@@ -1,15 +1,16 @@
 /**
- * @file ansi.h
+ * @file view/ansi.h
  * Fichier définissant les fonctions générant des séquences ANSI permettant d'interagir avec le terminal et de modifier la mise en forme du texte.
  * @author Hector Basset
  * @date 1 décembre 2014
  */
 
-#ifndef ANSI_H
+#ifndef VIEW_ANSI_H
 
-#define ANSI_H
+#define VIEW_ANSI_H
 
-#include "boolean.h"
+//bibliothèques utilitaires
+#include "../utility/boolean.h"
 
 /**
  * Type énuméré définissant les différentes couleurs directement sélectionnables en ANSI.
@@ -250,16 +251,6 @@ void ansi_scroll_up(unsigned int n);
 void ansi_scroll_down(unsigned int n);
 
 /**
- * Sauvegarde la position du curseur.
- */
-void ansi_save_position();
-
-/**
- * Restaure la position du curseur à celle sauvegardée.
- */
-void ansi_restore_position();
-
-/**
  * Change si le curseur doit être caché ou non.
  * @param hide Si le curseur doit être caché ou non.
  */
@@ -278,34 +269,6 @@ void ansi_set_color(ANSIColor color);
 void ansi_set_bg_color(ANSIColor color);
 
 /**
- * Change la couleur du texte via l'index de la couleur.
- * @param index L'index de la couleur (de 0 à 255).
- */
-void ansi_set_color_index(unsigned char index);
-
-/**
- * Change la couleur de l'arrière plan via l'index de la couleur.
- * @param index L'index de la couleur (de 0 à 255).
- */
-void ansi_set_bg_color_index(unsigned char index);
-
-/**
- * Change la couleur du texte via une composition RGB.
- * @param red La valeur de rouge.
- * @param green La valeur de vert.
- * @param blue La valeur de bleu.
- */
-void ansi_set_color_rgb(unsigned char red, unsigned char green, unsigned char blue);
-
-/**
- * Change la couleur de l'arrière plan via une composition RGB.
- * @param red La valeur de rouge.
- * @param green La valeur de vert.
- * @param blue La valeur de bleu.
- */
-void ansi_set_bg_color_rgb(unsigned char red, unsigned char green, unsigned char blue);
-
-/**
  * Change la police de caractère.
  * @param font La police de caractère.
  */
@@ -321,29 +284,5 @@ void ansi_normal();
  * @param bold Si le texte doit être en gras ou non.
  */
 void ansi_bold(boolean bold);
-
-/**
- * Change si le texte doit être souligné ou non.
- * @param underlined Si le texte doit être souligné ou non.
- */
-void ansi_underlined(boolean underlined);
-
-/**
- * Change si le texte doit être surligné ou non.
- * @param overlined Si le texte doit être surligné ou non.
- */
-void ansi_overlined(boolean overlined);
-
-/**
- * Change si le texte doit être en italique ou non.
- * @param italic Si le texte doit être en italique ou non.
- */
-void ansi_italic(boolean italic);
-
-/**
- * Change si le texte doit être encadré ou non.
- * @param framed Si le texts=e doit être encadré ou non.
- */
-void ansi_framed(boolean framed);
 
 #endif
