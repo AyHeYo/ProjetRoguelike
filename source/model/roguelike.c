@@ -34,6 +34,7 @@ void final_roguelike() {
 
 void new_level() {
 	short row, column;
+	Entity * entity;
 	//niveau supérieur
 	g_level++;
 	//génération du labyrinthe
@@ -47,4 +48,12 @@ void new_level() {
 	g_player->square = &(g_maze->squares[row * g_maze->size + column]);
 	g_player->direction = NORTH;
 	//placement des monstres
+	do {
+		row = rand_between(0, g_maze->size - 1);
+		column = rand_between(0, g_maze->size - 1);
+	} while (g_maze->squares[row * g_maze->size + column].type != AIR);
+	entity = new_entity(GOBLIN);
+	g_maze->squares[row * g_maze->size + column].entity = entity;
+	entity->square = &(g_maze->squares[row * g_maze->size + column]);
+	entity->direction = NORTH;
 }

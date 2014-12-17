@@ -51,6 +51,23 @@ static void print_square(Square * square) {
 				ansi_set_color(ANSI_WHITE);
 				fputs("⚇", stdout);
 				break;
+			case ARROW:
+				ansi_set_color(ANSI_WHITE);
+				switch (square->entity->direction) {
+					case NORTH:
+						fputs("↥", stdout);
+						break;
+					case EAST:
+						fputs("↦", stdout);
+						break;
+					case SOUTH:
+						fputs("↧", stdout);
+						break;
+					case WEST:
+						fputs("↤", stdout);
+						break;
+				}
+				break;
 			default:
 				break;
 		}

@@ -47,6 +47,8 @@ static pthread_t interface_thread;
  */
 static boolean stop_thread;
 
+#define DISPLAY_FREQUENCY 11
+
 /**
  * La fonction executée par le thread de l'affchage.
  * @param arg Ne prend pas d'argument.
@@ -67,7 +69,7 @@ static void * interface_routine(void * arg) {
 		if (stop_thread) {
 			pthread_exit(NULL);
 		} else {
-			usleep(60000);
+			usleep(1000000 / DISPLAY_FREQUENCY);
 		}
 	}
 }
