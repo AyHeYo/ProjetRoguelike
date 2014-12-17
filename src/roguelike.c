@@ -68,47 +68,33 @@ Dimension * get_maze_dimension() {
 }*/
 
 void generate_maze() {//vraie fonction de génération à finir d'implémenter
-	int rang, col, i;
+	int rang, col, i, nb_piece = 5;
+	Rectangle salle;
 	free(maze);//libération de l'espace mémoire alloué au labyrinthe, inutile de vérifier si NULL car free(NULL) n'a tout simplement aucun effet
 	maze = (Square *) malloc(20 * 20 * sizeof(Square));//allocation de la mémoire nécessaire pour stocker le labyrinthe
 	maze_dimension.horizontal = maze_dimension.vertical = 20;//sélection des dimensions du labyrinthe, pour l'instant constante à 20
 	
 
   //  Initialisation de toutes les positions partant du coté gauche du mur
-    for ( rang = 0; rang < maze_dimension.vertical ; rang++ )
-    {
-	 for (col = 0; col < maze_dimension.horizontal; col++)
-        {
-            printf("%2c",maze[rang * maze_dimension.horizontal + col]);
-        }
-        maze[rang * maze_dimension.horizontal + col] = WALL;
- 		maze[rang * maze_dimension.horizontal + maze_dimension.horizontal-1] = WALL;
+    for (rang = 0; rang < maze_dimension.vertical ; rang++ ) {
+		for (col = 0; col < maze_dimension.horizontal; col++) {
+        	maze[rang * maze_dimension.horizontal + col] = WALL;
+    	}
     }
-
-    rang = rand() % 19 + 1;
-    maze[rang * maze_dimension.horizontal] = WALL;
-
-    rang = rand() % 19 + 1;
-    maze[rang * maze_dimension.horizontal + maze_dimension.horizontal-1] = WALL;
-    for (col = 1; col < maze_dimension.horizontal - 1; col++)
-    {
-        maze[col] = WALL;
-        maze[(maze_dimension.horizontal-1) * maze_dimension.horizontal + col] = WALL;
-    }
-    for (rang = 0; rang < maze_dimension.vertical; rang++)
-    {
-        for (col = 0; col < maze_dimension.horizontal; col++)
-        {
-            printf("%2c",maze[rang * maze_dimension.horizontal + col]);
-        }
-        puts("");
-    }
-    puts("");
-
-	for (i = 0 ; i < maze_dimension.horizontal * maze_dimension.vertical ; i++) {//remplissage du labyrinthe par des murs
-		maze[i] = WALL;
-	}
 	//choix du nombre de pièces...
+	//nb_piece = rand() %5;
+	nb_piece = 1;
+	for(i =0; i< nb_piece; i++) {
+		salle.a.line = rand() % 5;
+		salle.a.row = rand() % 5;
+		salle.c.line = rand() % 5 + 5;
+		salle.c.row = rand() % 5 + 5;
+		for (rang = salle.a.line ; rang < salle.b.line ; rang++) {
+			for (col = salle.a.row ; col < salle.b.row ; col++) {
+				maze[rang * maze_dimension.horizontal + col] = AIR;
+			}
+		}
+	}
 	//choix de leur taille et de leur placement...
 	//génération des couloirs
 	player_location.line = player_location.row = 2;//placement du joueur, pour l'instant arbitrairement à 2:2
