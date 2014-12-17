@@ -37,8 +37,6 @@ int get_terminal_width() {
 	return wsize.ws_col;
 }
 
-typedef struct termios TerminalAttributs;
-
 void get_terminal_attributs(TerminalAttributs * attributs) {
 	tcgetattr(STDIN_FILENO, attributs);
 }
