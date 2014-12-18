@@ -11,11 +11,14 @@ NAME = roguelike
 #le nom du dossier contenant les sources
 SRCDIR = source
 
+#le nom du dossier contenant les objets de compilation
+OBJDIR = o
+
 #les fichiers source
 SRC = $(wildcard $(SRCDIR)/*/*.c)
 
 #les fichiers compilés
-OBJ = $(SRC:.c=.o)
+OBJ = $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRC))
 
 #le nom du dossier contenant les sources des tests
 TESTDIR = test
@@ -28,11 +31,11 @@ LIBS = -lpthread
 build: $(OBJ)
 	$(CC) $(FLAGS) $^ $(LIBS) -o $(NAME).exe
 
-%.o: %.c
-	$(CC) $(FLAGS) -c $< -o $@
+%/:
+	mkdir -p $@
 
 clean:
-	rm -rf $(SRCDIR)/*/*.o *.exe
+	rm -rf $(OBJDIR) *.exe
 
 rebuild: clean build
 
@@ -64,3 +67,7 @@ commit: clean
 
 push: commit
 	git push
+
+.SECONDEXPANSION:
+$(OBJDIR)/%.o: $(SRCDIR)/%.c $$(dir $$@)
+	$(CC) $(FLAGS) -c $< -o $@
