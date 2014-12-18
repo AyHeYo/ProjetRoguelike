@@ -15,10 +15,12 @@ SRCDIR = source
 OBJDIR = o
 
 #les fichiers source
-SRC = $(wildcard $(SRCDIR)/*/*.c)
+SRC = $(shell find $(SRCDIR)/ -name *.c)
 
 #les fichiers compilés
 OBJ = $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRC))
+
+OBJDIRS = $(dir $(OBJ))
 
 #le nom du dossier contenant les sources des tests
 TESTDIR = test
@@ -28,8 +30,11 @@ DOCDIR = doc
 
 LIBS = -lpthread
 
-build: $(OBJ)
-	$(CC) $(FLAGS) $^ $(LIBS) -o $(NAME).exe
+build: $(OBJDIRS) $(OBJ)
+	$(CC) $(FLAGS) $(filter %.o,$^) $(LIBS) -o $(NAME).exe
+
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+	$(CC) $(FLAGS) -c $< -o $@
 
 %/:
 	mkdir -p $@
@@ -67,7 +72,3 @@ commit: clean
 
 push: commit
 	git push
-
-.SECONDEXPANSION:
-$(OBJDIR)/%.o: $(SRCDIR)/%.c $$(dir $$@)
-	$(CC) $(FLAGS) -c $< -o $@
