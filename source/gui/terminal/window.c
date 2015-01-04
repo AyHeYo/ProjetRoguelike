@@ -15,6 +15,8 @@
 #include "terminal.h"
 #include "window.h"
 
+#include "../../game/game.h"
+
 /**
  * Marge entre la fenre et le bord du terminal.
  */
@@ -109,7 +111,7 @@ void set_message(char msg[]) {
 void display_message() {
 	const int width = get_terminal_width() - 2 * WINDOW_MARGIN, length = strlen(message);
 	int i, lines = -1;
-	ansi_set_position(1 + g_maze_height + WINDOW_TOP_MARGIN, 1);
+	ansi_set_position(1 + 5 + g_maze_height + WINDOW_TOP_MARGIN, 1);
 	ansi_clear_screen_after();
 	print_window_top();
 	for (i = 0 ; i < length ; i++) {

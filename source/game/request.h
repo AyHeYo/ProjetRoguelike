@@ -1,7 +1,7 @@
 
-#ifndef USER_REQUEST_H
+#ifndef GAME_REQUEST_H
 
-#define USER_REQUEST_H
+#define GAME_REQUEST_H
 
 typedef enum {
 
@@ -69,6 +69,8 @@ typedef enum {
 	 * Quitter/Sortir.
 	 */
 	EXIT
-} UserRequest;
+} Request;
+
+void request(Request request);
 
 #endif

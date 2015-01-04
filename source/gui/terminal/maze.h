@@ -18,6 +18,8 @@ int g_maze_height;
 
 void update_square(Square * square);
 
+void blink_square(Square * square);
+
 /**
  * Affiche le labyrinthe dans son ensemble.
  */

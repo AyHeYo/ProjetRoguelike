@@ -26,7 +26,7 @@ Entity * new_entity(EntityType type) {
 		case PLAYER:
 			entity->max_life = 100;
 			entity->life = 100;
-			entity->weapon = RANGED;
+			entity->weapon = MELEE;
 			break;
 		case GOBLIN:
 			entity->max_life = 20;
@@ -36,7 +36,7 @@ Entity * new_entity(EntityType type) {
 		case GHOST:
 			entity->max_life = 35;
 			entity->life = 35;
-			entity->weapon = NONE;
+			entity->weapon = MELEE;
 			break;
 		case KEY:
 			entity->max_life = 1;
@@ -79,24 +79,48 @@ void entity_move(Entity * entity, Direction direction) {
 }
 
 void entity_heal(Entity * entity, short amount) {
+	EntityHealEventData * event_data = malloc(sizeof(EntityHealEventData));
+	event_data->entity = entity;
+	event_data->amount = amount;
 	entity->life = mins(entity->life + amount, entity->max_life);
+	dispatch_new_event(ENTITY_HEAL, event_data);
 }
 
 void entity_hurt(Entity * entity, short amount) {
+	EntityHurtEventData * event_data = malloc(sizeof(EntityHurtEventData));
+	event_data->entity = entity;
+	event_data->amount = amount;
 	entity->life = maxs(entity->life - amount, 0);
+	dispatch_new_event(ENTITY_HURT, event_data);
+	if (entity->life == 0) {
+		entity_die(entity);
+	}
 }
 
 void entity_attack(Entity * entity) {
-	Entity * weapon;
+	Entity * weapon, * target = NULL;
 	Square * square;
 	switch (entity->weapon) {
 		case NONE:
 			break;
 		case MELEE:
+			square = get_near_square(entity->square, entity->direction);
+			if (square == NULL || square->type == WALL) {
+			} else if (square->entity != NULL) {
+				target = square->entity;
+			} else if (square->entity == NULL) {
+				weapon = new_entity(SWORD);
+				entity_spawn(weapon, square, entity->direction);
+				usleep(200000);
+				entity_remove(weapon);
+			}
 			break;
 		case RANGED:
 			square = get_near_square(entity->square, entity->direction);
-			if (square != NULL && entity_can_spawn(square)) {
+			if (square == NULL || square->type == WALL) {
+			} else if (square->entity != NULL) {
+				target = square->entity;
+			} else if (square->entity == NULL) {
 				weapon = new_entity(ARROW);
 				entity_spawn(weapon, square, entity->direction);
 				while (entity_can_move(weapon, entity->direction)) {
@@ -104,22 +128,36 @@ void entity_attack(Entity * entity) {
 					entity_move(weapon, entity->direction);
 				}
 				usleep(100000);
+				square = get_near_square(weapon->square, weapon->direction);
 				entity_remove(weapon);
+				if (square != NULL && square->type != WALL && square->entity != NULL) {
+					target = square->entity;
+				}
 			}
 			break;
 		case MAGIC:
 			square = get_near_square(entity->square, entity->direction);
-			if (square != NULL && entity_can_spawn(square)) {
-				weapon = new_entity(BALL);
+			if (square == NULL || square->type == WALL) {
+			} else if (square->entity != NULL) {
+				target = square->entity;
+			} else if (square->entity == NULL) {
+				weapon = new_entity(ARROW);
 				entity_spawn(weapon, square, entity->direction);
 				while (entity_can_move(weapon, entity->direction)) {
 					usleep(100000);
 					entity_move(weapon, entity->direction);
 				}
 				usleep(100000);
+				square = get_near_square(weapon->square, weapon->direction);
 				entity_remove(weapon);
+				if (square != NULL && square->type != WALL && square->entity != NULL) {
+					target = square->entity;
+				}
 			}
 			break;
+	}
+	if (target != NULL) {
+		entity_hurt(target, 5);
 	}
 }
 
@@ -157,4 +195,11 @@ void entity_remove(Entity * entity) {
 		entity_despawn(entity);
 	}
 	free(entity);
+}
+
+void entity_die(Entity * entity) {
+	EntityDieEventData * event_data = malloc(sizeof(EntityDieEventData));
+	event_data->entity = entity;
+	dispatch_new_event(ENTITY_DIE, event_data);
+	entity_remove(entity);
 }

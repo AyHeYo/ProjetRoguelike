@@ -7,6 +7,7 @@
 
 //librairies du système
 #include <stdio.h>
+#include <unistd.h>
 
 //librairies de la vue
 #include "ansi.h"
@@ -14,13 +15,10 @@
 #include "terminal.h"
 
 //librairies du modèle
+#include "../../game/game.h"
 #include "../../game/maze.h"
 
-/**
- * Fonction permettant d'afficher une case en fonction de son type.
- * @param square Le type de case à afficher.
- */
-static void print_square(Square * square) {
+static void set_background_color(Square * square) {
 	switch (square->type) {
 		case AIR:
 			ansi_set_bg_color(ANSI_BLACK);
@@ -35,6 +33,9 @@ static void print_square(Square * square) {
 			ansi_set_bg_color(ANSI_LIGHT_RED);
 			break;
 	}
+}
+
+static void print_foreground(Square * square) {
 	if (square->entity == NULL) {
 		putchar(' ');
 	} else {
@@ -68,10 +69,36 @@ static void print_square(Square * square) {
 						break;
 				}
 				break;
+			case SWORD:
+				ansi_set_color(ANSI_WHITE);
+				switch (square->entity->direction) {
+					case NORTH:
+						fputs("│", stdout);
+						break;
+					case EAST:
+						fputs("─", stdout);
+						break;
+					case SOUTH:
+						fputs("│", stdout);
+						break;
+					case WEST:
+						fputs("─", stdout);
+						break;
+				}
+				break;
 			default:
 				break;
 		}
 	}
+}
+
+/**
+ * Fonction permettant d'afficher une case en fonction de son type.
+ * @param square Le type de case à afficher.
+ */
+static void print_square(Square * square) {
+	set_background_color(square);
+	print_foreground(square);
 }
 
 void update_square(Square * square) {
@@ -79,6 +106,23 @@ void update_square(Square * square) {
 	ansi_set_position(1 + 2 + location.row, (get_terminal_width() - g_maze->size) / 2 + location.column);
 	print_square(square);
 	fflush(stdout);
+}
+
+void blink_square(Square * square) {
+	char i;
+	Location location = get_square_location(square);
+	ansi_set_position(1 + 2 + location.row, (get_terminal_width() - g_maze->size) / 2 + location.column);
+	for (i = 0 ; i < 4 ; i++) {
+		set_background_color(square);
+		putchar(' ');
+		fflush(stdout);
+		usleep(150000);
+		ansi_left(1);
+		print_foreground(square);
+		fflush(stdout);
+		usleep(150000);
+		ansi_left(1);
+	}
 }
 
 void display_maze() {

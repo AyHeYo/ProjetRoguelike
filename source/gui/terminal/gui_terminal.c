@@ -14,6 +14,7 @@
 
 //librairies de la vue
 #include "ansi.h"
+#include "life_bar.h"
 #include "maze.h"
 #include "terminal.h"
 #include "window.h"
@@ -21,8 +22,7 @@
 
 //librairies du modèle
 #include "../../game/event.h"
-#include "../../game/game.h"
-#include "../../game/user_request.h"
+#include "../../game/request.h"
 
 //librairies utilitaires
 #include "../../utility/boolean.h"
@@ -37,6 +37,7 @@ static boolean must_run;
 
 static void refresh() {
 	display_maze();
+	display_life_bar();
 	display_message();
 }
 
@@ -63,7 +64,7 @@ void gui_init() {
 }
 
 void gui_final() {
-	ansi_set_position(1 + g_window_height + g_maze_height, 1);
+	ansi_set_position(1 + 5 + g_window_height + g_maze_height, 1);
 	putchar('\n');
 	ansi_set_color(ANSI_DEFAULT_COLOR);
 	ansi_set_bg_color(ANSI_DEFAULT_COLOR);
@@ -74,7 +75,7 @@ void gui_final() {
 
 void gui_start() {
 	boolean waiting_request;
-	perform_request(STARTUP);
+	request(STARTUP);
 	must_run = true;
 	while (must_run) {
 		waiting_request = true;
@@ -86,56 +87,56 @@ void gui_start() {
 					if (getchar() == 91) {//la pression d'une touche flêche provoque la saisie de trois caractères (27 91 6x), les instructions suivantes permettent de voir si il s'agit donc d'une touche flêchée ou d'une autre touche spéciale 
 						switch (getchar()) {
 							case 65:
-								perform_request(MOVE_NORTH);
+								request(MOVE_NORTH);
 								break;
 							case 66:
-								perform_request(MOVE_SOUTH);
+								request(MOVE_SOUTH);
 								break;
 							case 67:
-								perform_request(MOVE_EAST);
+								request(MOVE_EAST);
 								break;
 							case 68:
-								perform_request(MOVE_WEST);
+								request(MOVE_WEST);
 								break;
 						}
 					} else {
-						perform_request(EXIT);
+						request(EXIT);
 					}
 					break;
 				case '8':
-					perform_request(SEE_NORTH);
+					request(SEE_NORTH);
 					break;
 				case '2':
-					perform_request(SEE_SOUTH);
+					request(SEE_SOUTH);
 					break;
 				case '6':
-					perform_request(SEE_EAST);
+					request(SEE_EAST);
 					break;
 				case '4':
-					perform_request(SEE_WEST);
+					request(SEE_WEST);
 					break;
 				case ' ':
-					perform_request(ATTACK);
+					request(ATTACK);
 					break;
 				case 'o':
 				case 'O':
-					perform_request(ACCEPT);
+					request(ACCEPT);
 					break;
 				case 'n':
 				case 'N':
-					perform_request(DENY);
+					request(DENY);
 					break;
 				case 'd':
 				case 'D':
-					perform_request(NEW_GAME);
+					request(NEW_GAME);
 					break;
 				case 'c':
 				case 'C':
-					perform_request(LOAD_GAME);
+					request(LOAD_GAME);
 					break;
 				case 's':
 				case 'S':
-					perform_request(SAVE_GAME);
+					request(SAVE_GAME);
 					break;
 				default:
 					waiting_request = true;
@@ -168,8 +169,15 @@ void gui_warn(Event * event) {
 		case ENTITY_DESPAWN:
 			update_square(((EntityDespawnEventData *) event->data)->square);
 			break;
+		case ENTITY_DIE:
+			break;
 		case ENTITY_DIRECTION_CHANGE:
 			update_square(((EntityDirectionChangeEventData *) event->data)->entity->square);
+			break;
+		case ENTITY_HEAL:
+			break;
+		case ENTITY_HURT:
+			blink_square(((EntityHurtEventData *) event->data)->entity->square);
 			break;
 		case ENTITY_MOVE:
 			update_square(((EntityMoveEventData *) event->data)->old);

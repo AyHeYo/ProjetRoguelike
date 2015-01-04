@@ -175,4 +175,6 @@ void entity_despawn(Entity * entity);
 
 void entity_remove(Entity * entity);
 
+void entity_die(Entity * entity);
+
 #endif

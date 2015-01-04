@@ -12,7 +12,10 @@ typedef enum {
 	CONFIRM,
 	ENTITY_ATTACK,
 	ENTITY_DESPAWN,
+	ENTITY_DIE,
 	ENTITY_DIRECTION_CHANGE,
+	ENTITY_HEAL,
+	ENTITY_HURT,
 	ENTITY_MOVE,
 	ENTITY_SPAWN,
 	MAIN_MENU,
@@ -46,6 +49,20 @@ typedef struct {
 typedef struct {
 	Entity * entity;
 } EntitySpawnEventData;
+
+typedef struct {
+	Entity * entity;
+} EntityDieEventData;
+
+typedef struct {
+	Entity * entity;
+	short amount;
+} EntityHurtEventData;
+
+typedef struct {
+	Entity * entity;
+	short amount;
+} EntityHealEventData;
 
 void dispatch_event(Event * event);
 

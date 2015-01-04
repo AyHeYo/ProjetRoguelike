@@ -1,9 +1,11 @@
 
-#ifndef GAME_MAZE_H
+#ifndef GAME_GAME_H
 
-#define GAME_MAZE_H
+#define GAME_GAME_H
 
-#include "user_request.h"
+#include "../utility/boolean.h"
+
+boolean g_game_running;
 
 /**
  * Le niveau actuel.
@@ -12,13 +14,15 @@ int g_level;
 
 void game_init();
 
-void game_final();
+void game_end();
+
+void new_game();
 
 /**
  * Créé un nouveau niveau.
  */
 void new_level();
 
-void perform_request(UserRequest request);
+void turn();
 
 #endif
