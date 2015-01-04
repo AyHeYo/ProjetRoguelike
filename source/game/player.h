@@ -5,9 +5,9 @@
  * @date 16 décembre 2014
  */
 
-#ifndef MODEL_PLAYER_H
+#ifndef GAME_PLAYER_H
 
-#define MODEL_PLAYER_H
+#define GAME_PLAYER_H
 
 //librairies du modèle
 #include "entity.h"

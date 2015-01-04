@@ -13,7 +13,7 @@
 #include <termios.h>
 
 //librairies utilitaires
-#include "../utility/boolean.h"
+#include "../../utility/boolean.h"
 
 /**
  * Structure représentant la taille d'un terminal (en nombre de colonne et de lignes de caractères).

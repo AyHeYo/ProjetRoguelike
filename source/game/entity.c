@@ -7,9 +7,11 @@
 
 //librairies du système
 #include <stdlib.h>
+#include <unistd.h>
 
 //librairies du modèle
 #include "entity.h"
+#include "events.h"
 #include "maze.h"
 
 //librairies utilitaires
@@ -61,59 +63,19 @@ Entity * new_entity(EntityType type) {
 }
 
 boolean entity_can_move(Entity * entity, Direction direction) {
-	Square * square;
-	switch (direction) {
-		case NORTH:
-			if ((entity->square - g_maze->squares) < g_maze->size) {
-				return false;
-			} else {
-				 square = entity->square - g_maze->size;
-				 break;
-			}
-		case SOUTH:
-			if ((entity->square + g_maze->size) >= (g_maze->squares + g_maze->size * g_maze->size)) {
-				return false;
-			} else {
-				square = entity->square + g_maze->size;
-				break;
-			}
-		case EAST:
-			if (((entity->square - g_maze->squares) % g_maze->size) == (g_maze->size - 1)) {
-				return false;
-			} else {
-				square = entity->square + 1;
-				break;
-			}
-		case WEST:
-			if (((entity->square - g_maze->squares) % g_maze->size) == 0) {
-				return false;
-			} else {
-				square = entity->square - 1;
-				break;
-			}
-	}
-	return (square->type != WALL) && (square->entity == NULL);
+	Square * square = get_near_square(entity->square, direction);
+	return (square != NULL) && (square->type != WALL) && (square->entity == NULL);
 }
 
 void entity_move(Entity * entity, Direction direction) {
-	Square * square;
-	switch (direction) {
-		case NORTH:
-			square = entity->square - g_maze->size;
-			break;
-		case SOUTH:
-			square = entity->square + g_maze->size;
-			break;
-		case EAST:
-			square = entity->square + 1;
-			break;
-		case WEST:
-			square = entity->square - 1;
-			break;
-	}
+	EntityMoveGameEventData * event_data = malloc(sizeof(EntityMoveGameEventData));
+	event_data->entity = entity;
+	event_data->old = entity->square;
+	Square * square = get_near_square(entity->square, direction);
 	square->entity = entity;
 	entity->square->entity = NULL;
 	entity->square = square;
+	add_new_event(ENTITY_MOVE, event_data);
 }
 
 void entity_heal(Entity * entity, short amount) {
@@ -125,14 +87,33 @@ void entity_hurt(Entity * entity, short amount) {
 }
 
 void entity_attack(Entity * entity) {
+	Entity * weapon;
+	Square * square;
 	switch (entity->weapon) {
 		case NONE:
 			break;
 		case MELEE:
 			break;
 		case RANGED:
+			weapon = new_entity(ARROW);
+			weapon->direction = entity->direction;
+			
+			for (weapon->square = square = get_near_square(entity->square, entity->direction) ; square != NULL ; square = get_near_square(square, weapon->direction)) {
+				weapon->square->entity = NULL;
+				weapon->square = square;
+				square->entity = weapon;
+				usleep(75000);
+			}
 			break;
 		case MAGIC:
 			break;
 	}
+}
+
+void entity_set_direction(Entity * entity, Direction direction) {
+	EntityDirectionChangeGameEventData * event_data = malloc(sizeof(EntityDirectionChangeGameEventData));
+	event_data->entity = entity;
+	event_data->old = entity->direction;
+	entity->direction = direction;
+	add_new_event(ENTITY_DIRECTION_CHANGE, event_data);
 }

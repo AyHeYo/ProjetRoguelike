@@ -9,12 +9,14 @@
 #include <stdlib.h>
 
 //librairies du modèle
+#include "events.h"
 #include "maze.h"
 
-//Librairies utilitaires
+//librairies utilitaires
+#include "../utility/direction.h"
+#include "../utility/geo.h"
 #include "../utility/math.h"
 
-#include "../utility/geo.h"
 /**
  * La taille minimum (taille du niveau 1).
  */
@@ -67,12 +69,12 @@ void generate_maze() {
 	//nb_piece = rand() %5;
 	nb_piece = 1;
 	for(i =0; i< nb_piece; i++) {
-		salle.a.line = rand_between(0,5);
 		salle.a.row = rand_between(0,5);
-		salle.c.line = rand_between(6,10);
+		salle.a.column = rand_between(0,5);
 		salle.c.row = rand_between(6,10);
-		for (row = salle.a.line ; row < salle.c.line ; row++) {
-			for (column = salle.a.row ; column < salle.c.row ; column++) {
+		salle.c.column = rand_between(6,10);
+		for (row = salle.a.row ; row < salle.c.row ; row++) {
+			for (column = salle.a.column ; column < salle.c.column ; column++) {
 				g_maze->squares[row * g_maze->size + column].type = AIR;
 			}
 		}
@@ -80,9 +82,48 @@ void generate_maze() {
 	//choix de leur taille et de leur placement...
 	
 	//génération des couloirs
+	add_new_event(MAZE_GENERATE, NULL);
 }
 
 void free_maze() {
 	free_squares();
 	free(g_maze);
+	g_maze = NULL;
+	add_new_event(MAZE_GENERATE, NULL);
+}
+
+Square * get_near_square(Square * square, Direction direction) {
+	switch (direction) {
+		case NORTH:
+			if ((square - g_maze->squares) < g_maze->size) {
+				return NULL;
+			} else {
+				 return square - g_maze->size;
+			}
+		case SOUTH:
+			if ((square + g_maze->size) >= (g_maze->squares + g_maze->size * g_maze->size)) {
+				return NULL;
+			} else {
+				return square + g_maze->size;
+			}
+		case EAST:
+			if (((square - g_maze->squares) % g_maze->size) == (g_maze->size - 1)) {
+				return NULL;
+			} else {
+				return square + 1;
+			}
+		case WEST:
+			if (((square - g_maze->squares) % g_maze->size) == 0) {
+				return NULL;
+			} else {
+				return square - 1;
+			}
+	}
+}
+
+Location get_square_location(Square * square) {
+	Location location;
+	location.row = (square - g_maze->squares) / g_maze->size;
+	location.column = (square - g_maze->squares) % g_maze->size;
+	return location;
 }

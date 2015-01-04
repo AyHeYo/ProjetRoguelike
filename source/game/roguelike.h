@@ -7,9 +7,9 @@
  * @date 20 novembre 2014
  */
 
-#ifndef MODEL_ROGUELIKE_H
+#ifndef GAME_ROGUELIKE_H
 
-#define MODEL_ROGUELIKE_H
+#define GAME_ROGUELIKE_H
 
 //librairies du modèle
 #include "maze.h"

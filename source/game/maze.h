@@ -5,12 +5,16 @@
  * @date 16 décembre 2014
  */
 
-#ifndef MODEL_MAZE_H
+#ifndef GAME_MAZE_H
 
-#define MODEL_MAZE_H
+#define GAME_MAZE_H
 
 //librairies du modèle
 #include "entity.h"
+
+//librairies utilitaires
+#include "../utility/direction.h"
+#include "../utility/geo.h"
 
 /**
  * Type énuméré définissant les différents types de case.
@@ -86,5 +90,9 @@ void generate_maze();
  * Fonction libérant l'espace mémoire occupé par le labyrinthe.
  */
 void free_maze();
+
+Square * get_near_square(Square * square, Direction direction);
+
+Location get_square_location(Square * square);
 
 #endif

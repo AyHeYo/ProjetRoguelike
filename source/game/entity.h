@@ -7,9 +7,9 @@
  * @date 16 décembre 2014
  */
 
-#ifndef MODEL_ENTITY_H
+#ifndef GAME_ENTITY_H
 
-#define MODEL_ENTITY_H
+#define GAME_ENTITY_H
 
 //librairies du modèle
 #include "maze.h"
@@ -164,5 +164,7 @@ void entity_hurt(Entity * entity, short amount);
  * @param entity L'entité.
  */
 void entity_attack(Entity * entity);
+
+void entity_set_direction(Entity * entity, Direction direction);
 
 #endif

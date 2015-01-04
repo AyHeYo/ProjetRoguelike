@@ -12,7 +12,7 @@
 #include "ansi.h"
 
 //bibliothèques utilitaires
-#include "../utility/boolean.h"
+#include "../../utility/boolean.h"
 
 /**
  * La séquence d'échappement.

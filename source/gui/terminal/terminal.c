@@ -14,7 +14,7 @@
 #include "terminal.h"
 
 //librairies utilitaires
-#include "../utility/boolean.h"
+#include "../../utility/boolean.h"
 
 TerminalSize get_terminal_size() {
 	struct winsize wsize;

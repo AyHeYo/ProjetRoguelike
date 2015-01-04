@@ -10,7 +10,7 @@
 #define VIEW_ANSI_H
 
 //bibliothèques utilitaires
-#include "../utility/boolean.h"
+#include "../../utility/boolean.h"
 
 /**
  * Type énuméré définissant les différentes couleurs directement sélectionnables en ANSI.
