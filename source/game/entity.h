@@ -17,6 +17,7 @@
 //librairies utilitaires
 #include "../utility/boolean.h"
 #include "../utility/direction.h"
+#include "../utility/list.h"
 
 /**
  * Type énuméré définissant les différents types d'entité.
@@ -122,6 +123,8 @@ struct Entity {
 	 */
 	struct Square * square;
 };
+
+List * g_entities;
 
 /**
  * Créé une nouvelle entité.

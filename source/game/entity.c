@@ -17,6 +17,7 @@
 //librairies utilitaires
 #include "../utility/boolean.h"
 #include "../utility/direction.h"
+#include "../utility/list.h"
 #include "../utility/math.h"
 
 Entity * new_entity(EntityType type) {
@@ -179,6 +180,7 @@ void entity_spawn(Entity * entity, Square * square, Direction direction) {
 	entity->square = square;
 	square->entity = entity;
 	entity->direction = direction;
+	list_add_end(g_entities, &entity);
 	dispatch_new_event(ENTITY_SPAWN, event_data);
 }
 
@@ -187,6 +189,7 @@ void entity_despawn(Entity * entity) {
 	event_data->square = entity->square;
 	entity->square->entity = NULL;
 	entity->square = NULL;
+	list_remove_value(g_entities, &entity);
 	dispatch_new_event(ENTITY_DESPAWN, event_data);
 }
 
