@@ -11,7 +11,7 @@
 
 //librairies du modèle
 #include "entity.h"
-#include "events.h"
+#include "event.h"
 #include "maze.h"
 
 //librairies utilitaires
@@ -68,14 +68,14 @@ boolean entity_can_move(Entity * entity, Direction direction) {
 }
 
 void entity_move(Entity * entity, Direction direction) {
-	EntityMoveGameEventData * event_data = malloc(sizeof(EntityMoveGameEventData));
-	event_data->entity = entity;
-	event_data->old = entity->square;
 	Square * square = get_near_square(entity->square, direction);
+	EntityMoveEventData * event_data = malloc(sizeof(EntityMoveEventData));
+	event_data->new = square;
+	event_data->old = entity->square;
 	square->entity = entity;
 	entity->square->entity = NULL;
 	entity->square = square;
-	add_new_event(ENTITY_MOVE, event_data);
+	dispatch_new_event(ENTITY_MOVE, event_data);
 }
 
 void entity_heal(Entity * entity, short amount) {
@@ -95,25 +95,66 @@ void entity_attack(Entity * entity) {
 		case MELEE:
 			break;
 		case RANGED:
-			weapon = new_entity(ARROW);
-			weapon->direction = entity->direction;
-			
-			for (weapon->square = square = get_near_square(entity->square, entity->direction) ; square != NULL ; square = get_near_square(square, weapon->direction)) {
-				weapon->square->entity = NULL;
-				weapon->square = square;
-				square->entity = weapon;
-				usleep(75000);
+			square = get_near_square(entity->square, entity->direction);
+			if (square != NULL && entity_can_spawn(square)) {
+				weapon = new_entity(ARROW);
+				entity_spawn(weapon, square, entity->direction);
+				while (entity_can_move(weapon, entity->direction)) {
+					usleep(100000);
+					entity_move(weapon, entity->direction);
+				}
+				usleep(100000);
+				entity_remove(weapon);
 			}
 			break;
 		case MAGIC:
+			square = get_near_square(entity->square, entity->direction);
+			if (square != NULL && entity_can_spawn(square)) {
+				weapon = new_entity(BALL);
+				entity_spawn(weapon, square, entity->direction);
+				while (entity_can_move(weapon, entity->direction)) {
+					usleep(100000);
+					entity_move(weapon, entity->direction);
+				}
+				usleep(100000);
+				entity_remove(weapon);
+			}
 			break;
 	}
 }
 
 void entity_set_direction(Entity * entity, Direction direction) {
-	EntityDirectionChangeGameEventData * event_data = malloc(sizeof(EntityDirectionChangeGameEventData));
+	EntityDirectionChangeEventData * event_data = malloc(sizeof(EntityDirectionChangeEventData));
 	event_data->entity = entity;
 	event_data->old = entity->direction;
 	entity->direction = direction;
-	add_new_event(ENTITY_DIRECTION_CHANGE, event_data);
+	dispatch_new_event(ENTITY_DIRECTION_CHANGE, event_data);
+}
+
+boolean entity_can_spawn(Square * square) {
+	return (square->type == AIR) && (square->entity == NULL);
+}
+
+void entity_spawn(Entity * entity, Square * square, Direction direction) {
+	EntitySpawnEventData * event_data = malloc(sizeof(EntitySpawnEventData));
+	event_data->entity = entity;
+	entity->square = square;
+	square->entity = entity;
+	entity->direction = direction;
+	dispatch_new_event(ENTITY_SPAWN, event_data);
+}
+
+void entity_despawn(Entity * entity) {
+	EntityDespawnEventData * event_data = malloc(sizeof(EntityDespawnEventData));
+	event_data->square = entity->square;
+	entity->square->entity = NULL;
+	entity->square = NULL;
+	dispatch_new_event(ENTITY_DESPAWN, event_data);
+}
+
+void entity_remove(Entity * entity) {
+	if (entity->square != NULL) {
+		entity_despawn(entity);
+	}
+	free(entity);
 }

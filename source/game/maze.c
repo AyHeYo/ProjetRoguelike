@@ -9,7 +9,7 @@
 #include <stdlib.h>
 
 //librairies du modèle
-#include "events.h"
+#include "event.h"
 #include "maze.h"
 
 //librairies utilitaires
@@ -82,14 +82,14 @@ void generate_maze() {
 	//choix de leur taille et de leur placement...
 	
 	//génération des couloirs
-	add_new_event(MAZE_GENERATE, NULL);
+	dispatch_new_event(MAZE_GENERATE, NULL);
 }
 
 void free_maze() {
 	free_squares();
 	free(g_maze);
 	g_maze = NULL;
-	add_new_event(MAZE_GENERATE, NULL);
+	dispatch_new_event(MAZE_GENERATE, NULL);
 }
 
 Square * get_near_square(Square * square, Direction direction) {

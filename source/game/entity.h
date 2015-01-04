@@ -167,4 +167,12 @@ void entity_attack(Entity * entity);
 
 void entity_set_direction(Entity * entity, Direction direction);
 
+boolean entity_can_spawn(struct Square * square);
+
+void entity_spawn(Entity * entity, struct Square * square, Direction direction);
+
+void entity_despawn(Entity * entity);
+
+void entity_remove(Entity * entity);
+
 #endif

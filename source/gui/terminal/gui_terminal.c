@@ -20,7 +20,7 @@
 #include "../gui.h"
 
 //librairies du modèle
-#include "../../game/events.h"
+#include "../../game/event.h"
 #include "../../game/game.h"
 #include "../../game/user_request.h"
 
@@ -73,40 +73,10 @@ void gui_final() {
 }
 
 void gui_start() {
-	boolean waiting_request = true;
-	GameEvent event;
+	boolean waiting_request;
 	perform_request(STARTUP);
 	must_run = true;
 	while (must_run) {
-		while (has_event()) {
-			get_event(&event);
-			switch (event.type) {
-				case CONFIRM:
-					gui_set_message("Etes-vous sur ?");
-					break;
-				case ENTITY_ATTACK:
-					break;
-				case ENTITY_DIRECTION_CHANGE:
-					update_square(((EntityDirectionChangeGameEventData *) event.data)->entity->square);
-					break;
-				case ENTITY_MOVE:
-					update_square(((EntityMoveGameEventData *) event.data)->old);
-					update_square(((EntityMoveGameEventData *) event.data)->entity->square);
-					break;
-				case MAIN_MENU:
-					gui_set_message("Voulez-vous démarrer une nouvelle partie (d), ou en charger une existante (c) ? Vous pouvez quitter avec la touche ECHAP.");
-					break;
-				case MAZE_GENERATE:
-					gui_clear_message();
-					refresh();
-					break;
-				case STOP_GAME:
-					gui_set_message("Au revoir !");
-					return;
-					break;
-			}
-			remove_event();
-		}
 		waiting_request = true;
 		while (waiting_request) {
 			waiting_request = false;
@@ -130,8 +100,20 @@ void gui_start() {
 						}
 					} else {
 						perform_request(EXIT);
-						break;
 					}
+					break;
+				case '8':
+					perform_request(SEE_NORTH);
+					break;
+				case '2':
+					perform_request(SEE_SOUTH);
+					break;
+				case '6':
+					perform_request(SEE_EAST);
+					break;
+				case '4':
+					perform_request(SEE_WEST);
+					break;
 				case ' ':
 					perform_request(ATTACK);
 					break;
@@ -174,4 +156,38 @@ void gui_set_message(char * message) {
 
 void gui_clear_message() {
 	gui_set_message(" ");
+}
+
+void gui_warn(Event * event) {
+	switch (event->type) {
+		case CONFIRM:
+			gui_set_message("Etes-vous sur ?");
+			break;
+		case ENTITY_ATTACK:
+			break;
+		case ENTITY_DESPAWN:
+			update_square(((EntityDespawnEventData *) event->data)->square);
+			break;
+		case ENTITY_DIRECTION_CHANGE:
+			update_square(((EntityDirectionChangeEventData *) event->data)->entity->square);
+			break;
+		case ENTITY_MOVE:
+			update_square(((EntityMoveEventData *) event->data)->old);
+			update_square(((EntityMoveEventData *) event->data)->new);
+			break;
+		case ENTITY_SPAWN:
+			update_square(((EntitySpawnEventData *) event->data)->entity->square);
+			break;
+		case MAIN_MENU:
+			gui_set_message("Voulez-vous démarrer une nouvelle partie (d), ou en charger une existante (c) ? Vous pouvez quitter avec la touche ECHAP.");
+			break;
+		case MAZE_GENERATE:
+			gui_clear_message();
+			refresh();
+			break;
+		case STOP_GAME:
+			gui_set_message("Au revoir !");
+			gui_stop();
+			break;
+	}
 }

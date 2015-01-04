@@ -12,7 +12,7 @@
 
 //librairies du modèle
 #include "entity.h"
-#include "events.h"
+#include "event.h"
 #include "maze.h"
 #include "player.h"
 #include "roguelike.h"
@@ -45,40 +45,34 @@ void new_level() {
 	do {
 		row = rand_between(0, g_maze->size - 1);
 		column = rand_between(0, g_maze->size - 1);
-	} while (g_maze->squares[row * g_maze->size + column].type != AIR);
-	g_maze->squares[row * g_maze->size + column].entity = g_player;
-	g_player->square = &(g_maze->squares[row * g_maze->size + column]);
-	g_player->direction = NORTH;
+	} while (!entity_can_spawn(g_maze->squares + (row * g_maze->size + column)));
+	entity_spawn(g_player, g_maze->squares + (row * g_maze->size + column), NORTH);
 	//placement des monstres
 	do {
 		row = rand_between(0, g_maze->size - 1);
 		column = rand_between(0, g_maze->size - 1);
-	} while (g_maze->squares[row * g_maze->size + column].type != AIR);
+	} while (!entity_can_spawn(g_maze->squares + (row * g_maze->size + column)));
 	entity = new_entity(GOBLIN);
-	g_maze->squares[row * g_maze->size + column].entity = entity;
-	entity->square = &(g_maze->squares[row * g_maze->size + column]);
-	entity->direction = NORTH;
+	entity_spawn(entity, g_maze->squares + (row * g_maze->size + column), NORTH);
 }
 
 static boolean game_running = false;
 
 void perform_request(UserRequest request) {
-	GameEvent event;
 	switch (request) {
 		case STARTUP:
 			if (!game_running) {
 				srand(utime(NULL));
-				events_init();
-				add_new_event(MAIN_MENU, NULL);
+				dispatch_new_event(MAIN_MENU, NULL);
 			}
 			break;
 		case EXIT:
 			if (game_running) {
 				game_running = false;
 				game_final();
-				add_new_event(MAIN_MENU, NULL);
+				dispatch_new_event(MAIN_MENU, NULL);
 			} else {
-				add_new_event(STOP_GAME, NULL);
+				dispatch_new_event(STOP_GAME, NULL);
 			}
 			break;
 		case NEW_GAME:
@@ -92,40 +86,56 @@ void perform_request(UserRequest request) {
 			}
 			break;
 		case MOVE_NORTH:
-			entity_set_direction(g_player, NORTH);
+			if (g_player->direction != NORTH) {
+				entity_set_direction(g_player, NORTH);
+			}
 			if (entity_can_move(g_player, NORTH)) {
 				entity_move(g_player, NORTH);
 			}
 			break;
 		case MOVE_SOUTH:
-			entity_set_direction(g_player, SOUTH);
+			if (g_player->direction != SOUTH) {
+				entity_set_direction(g_player, SOUTH);
+			}
 			if (entity_can_move(g_player, SOUTH)) {
 				entity_move(g_player, SOUTH);
 			}
 			break;
 		case MOVE_EAST:
-			entity_set_direction(g_player, EAST);
+			if (g_player->direction != EAST) {
+				entity_set_direction(g_player, EAST);
+			}
 			if (entity_can_move(g_player, EAST)) {
 				entity_move(g_player, EAST);
 			}
 			break;
 		case MOVE_WEST:
-			entity_set_direction(g_player, WEST);
+			if (g_player->direction != WEST) {
+				entity_set_direction(g_player, WEST);
+			}
 			if (entity_can_move(g_player, WEST)) {
 				entity_move(g_player, WEST);
 			}
 			break;
 		case SEE_NORTH:
-			entity_set_direction(g_player, NORTH);
+			if (g_player->direction != NORTH) {
+				entity_set_direction(g_player, NORTH);
+			}
 			break;
 		case SEE_SOUTH:
-			entity_set_direction(g_player, SOUTH);
+			if (g_player->direction != SOUTH) {
+				entity_set_direction(g_player, SOUTH);
+			}
 			break;
 		case SEE_EAST:
-			entity_set_direction(g_player, EAST);
+			if (g_player->direction != EAST) {
+				entity_set_direction(g_player, EAST);
+			}
 			break;
 		case SEE_WEST:
-			entity_set_direction(g_player, WEST);
+			if (g_player->direction != WEST) {
+				entity_set_direction(g_player, WEST);
+			}
 			break;
 		case ATTACK:
 			entity_attack(g_player);
