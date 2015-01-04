@@ -5,9 +5,9 @@
  * @date 1 décembre 2014
  */
 
-#ifndef VIEW_ANSI_H
+#ifndef GUI_TERMINAL_ANSI_H
 
-#define VIEW_ANSI_H
+#define GUI_TERMINAL_ANSI_H
 
 //bibliothèques utilitaires
 #include "../../utility/boolean.h"

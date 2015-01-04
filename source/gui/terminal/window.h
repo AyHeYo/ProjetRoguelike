@@ -5,9 +5,9 @@
  * @date 10 décembre 2014
  */
 
-#ifndef GUI_WINDOW_H
+#ifndef GUI_TERMINAL_WINDOW_H
 
-#define GUI_WINDOW_H
+#define GUI_TERMINAL_WINDOW_H
 
 /**
  * Marge entre la fenêtre et le labyrinthe.

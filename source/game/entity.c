@@ -10,13 +10,13 @@
 #include <unistd.h>
 
 //librairies du modèle
+#include "direction.h"
 #include "entity.h"
 #include "event.h"
 #include "maze.h"
 
 //librairies utilitaires
 #include "../utility/boolean.h"
-#include "../utility/direction.h"
 #include "../utility/list.h"
 #include "../utility/math.h"
 

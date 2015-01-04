@@ -10,10 +10,10 @@
 #define GAME_MAZE_H
 
 //librairies du modèle
+#include "direction.h"
 #include "entity.h"
 
 //librairies utilitaires
-#include "../utility/direction.h"
 #include "../utility/geo.h"
 
 /**
@@ -74,6 +74,8 @@ typedef struct {
 	 * La taille du labyrinthe (nombre de case pour chaque côtés).
 	 */
 	unsigned short size;
+
+	Square * door;
 } Maze;
 
 /**

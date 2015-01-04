@@ -1,6 +1,7 @@
 
 #include <stddef.h>
 
+#include "direction.h"
 #include "entity.h"
 #include "event.h"
 #include "game.h"
@@ -8,7 +9,6 @@
 #include "player.h"
 #include "request.h"
 
-#include "../utility/direction.h"
 #include "../utility/geo.h"
 
 void request(Request request) {

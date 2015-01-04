@@ -5,9 +5,9 @@
  * @date 10 décembre 2014
  */
 
-#ifndef VIEW_TERMINAL_H
+#ifndef GUI_TERMINAL_TERMINAL_H
 
-#define VIEW_TERMINAL_H
+#define GUI_TERMINAL_TERMINAL_H
 
 //librairies du système
 #include <termios.h>

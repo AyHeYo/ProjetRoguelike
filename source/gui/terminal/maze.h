@@ -5,9 +5,9 @@
  * @date 12 décembre 2014
  */
 
-#ifndef GUI_MAZE_H
+#ifndef GUI_TERMINAL_MAZE_H
 
-#define GUI_MAZE_H
+#define GUI_TERMINAL_MAZE_H
 
 #include "../../game/maze.h"
 

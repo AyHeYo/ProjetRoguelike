@@ -11,13 +11,13 @@
 #include <stdlib.h>
 
 //librairies du modèle
+#include "direction.h"
 #include "entity.h"
 #include "game.h"
 #include "maze.h"
 #include "player.h"
 
 //librairies utilitaires
-#include "../utility/direction.h"
 #include "../utility/geo.h"
 #include "../utility/math.h"
 #include "../utility/time.h"
@@ -77,18 +77,28 @@ void turn() {
 		switch (entity->type) {
 			case GOBLIN:
 			case GHOST:
-				/*do {
-					direction = rand_between(0, 3);
-				} while (!entity_can_move(entity, direction));
-				if (entity->direction != direction) {
-					entity_set_direction(entity, direction);
+				/*for (i = 0 ; i < 4 ; i++) {
+					direction = get_random_direction();
+					if (entity_can_move(entity, direction)) {
+						break;
+					}
 				}
-				entity_move(entity, direction);*/
+				if (i < 5) {
+					if (entity->direction != direction) {
+						entity_set_direction(entity, direction);
+					}
+					entity_move(entity, direction);
+				}*/
 				entity_attack(entity);
 			case PLAYER:
 				if (entity->square->type == FIRE) {
 					entity_hurt(entity, 10);
 				}
+				break;
+			case SWORD:
+			case ARROW:
+			case BALL:
+			default:
 				break;
 		}
 	}

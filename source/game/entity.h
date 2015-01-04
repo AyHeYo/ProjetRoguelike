@@ -12,11 +12,11 @@
 #define GAME_ENTITY_H
 
 //librairies du modèle
+#include "direction.h"
 #include "maze.h"
 
 //librairies utilitaires
 #include "../utility/boolean.h"
-#include "../utility/direction.h"
 #include "../utility/list.h"
 
 /**

@@ -1,7 +1,7 @@
 
-#ifndef GAME_GAME_EVENTS_H
+#ifndef GAME_EVENT_H
 
-#define GAME_GAME_EVENTS_H
+#define GAME_EVENT_H
 
 #include "entity.h"
 #include "maze.h"
