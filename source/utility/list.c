@@ -222,3 +222,15 @@ void list_get_first(List * list, void * pointer) {
 void list_get_last(List * list, void * pointer) {
 	memcpy(pointer, list->last->value, list->size_of_elements);
 }
+
+boolean list_contains(List * list, void * value) {
+	ListElement * current = list->current;
+	for (list_begin(list) ; !list_out(list) ; list_next(list)) {
+		if (memcmp(list->current->value, value, list->size_of_elements) == 0) {
+			list->current = current;
+			return true;
+		}
+	}
+	list->current = current;
+	return false;
+}

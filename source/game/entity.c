@@ -206,3 +206,13 @@ void entity_die(Entity * entity) {
 	dispatch_new_event(ENTITY_DIE, event_data);
 	entity_remove(entity);
 }
+
+void entity_view(Entity * entity, List * list) {
+	resolve_entity_view(list, entity);
+}
+
+boolean entity_can_see(Entity * entity, Entity * otherEntity) {
+	List * list = new_list(sizeof(Square *));
+	resolve_entity_view(list, entity);
+	return list_contains(list, &(otherEntity->square));
+}

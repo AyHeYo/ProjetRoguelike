@@ -173,4 +173,6 @@ void list_get_first(List * list, void * pointer);
  */
 void list_get_last(List * list, void * pointer);
 
+boolean list_contains(List * list, void * value);
+
 #endif

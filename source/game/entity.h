@@ -180,4 +180,8 @@ void entity_remove(Entity * entity);
 
 void entity_die(Entity * entity);
 
+void entity_view(Entity * entity, List * list);
+
+boolean entity_can_see(Entity * entity, Entity * otherEntity);
+
 #endif

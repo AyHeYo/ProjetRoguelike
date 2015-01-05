@@ -120,7 +120,7 @@ void generate_maze() {
 		rooms[i].a.column--;
 	}*/
 	//
-	for (; i < nb_room ; i++) {
+	for (i = 1 ; i < nb_room ; i++) {
 		
 	}
 	//
