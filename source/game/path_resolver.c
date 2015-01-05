@@ -114,7 +114,7 @@ static void to_stack(Stack * stack) {
 		}
 	}
 	list_get_value(founds, &branch);
-	for ( ; branch != NULL ; branch = branch->from) {
+	for ( ; branch->from != NULL ; branch = branch->from) {
 		stack_push(stack, &(branch->direction));
 	}
 }

@@ -73,7 +73,7 @@ void new_level() {
 
 void turn() {
 	Direction direction;
-	Stack * path = new_stack(sizeof(Direction));
+	Stack * path;
 	Entity * entity;
 	for (list_begin(g_entities) ; !list_out(g_entities) ; list_next(g_entities)) {
 		list_get_value(g_entities, &entity);
@@ -81,14 +81,29 @@ void turn() {
 			case GOBLIN:
 			case GHOST:
 				if (entity_can_see(entity, g_player)) {
-					resolve_path(entity->square, g_player->square, path);
-					if (!stack_empty(path)) {
-						stack_pop(path, &direction);
-						entity_move(entity, direction);
-					}
-					stack_clear(path);
 					if (entity_can_attack(entity, g_player)) {
 						entity_attack(entity);
+					} else {
+						path = new_stack(sizeof(Direction));
+						resolve_path(entity->square, g_player->square, path);
+						if (!stack_empty(path)) {
+							stack_pop(path, &direction);
+							if (direction != entity->direction) {
+								entity_set_direction(entity, direction);
+							}
+							if (entity_can_attack(entity, g_player)) {
+								entity_attack(entity);
+							} else if (entity_can_move(entity, direction)) {
+								entity_move(entity, direction);
+								if (!stack_empty(path)) {
+									stack_pop(path, &direction);
+									if (direction != entity->direction) {
+										entity_set_direction(entity, direction);
+									}
+								}
+							}
+							stack_free(path);
+						}
 					}
 				}
 			case PLAYER:

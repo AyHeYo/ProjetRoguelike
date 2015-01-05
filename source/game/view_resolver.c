@@ -99,5 +99,5 @@ void resolve_entity_view(Entity * entity, List * list) {
 	viewer = entity;
 	viewer_location = get_square_location(entity->square);
 	resolve_square(entity->square);
-	printf("%i", list_size(list));
+	//printf("%i", list_size(list));
 }
