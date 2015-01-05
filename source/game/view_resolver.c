@@ -2,7 +2,6 @@
 #include "direction.h"
 #include "entity.h"
 #include "maze.h"
-#include "player.h"
 
 #include "../utility/boolean.h"
 #include "../utility/list.h"
