@@ -64,7 +64,7 @@ void generate_maze() {
 	}
 	//choix du nombre de pièces...
 	//nb_room = rand_between(1 + g_maze->size / 15, (1 + g_maze->size / 15) + (((g_maze->size % 15) > 7) ? rand_between(0, 1) : 0));
-	nb_room = 2;
+	nb_room = 1;
 	rooms = malloc(sizeof(Rectangle) * nb_room);
 	//première pièce
 	i = 0;

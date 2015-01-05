@@ -14,6 +14,7 @@
 #include "entity.h"
 #include "event.h"
 #include "maze.h"
+#include "view_resolver.h"
 
 //librairies utilitaires
 #include "../utility/boolean.h"
@@ -207,12 +208,34 @@ void entity_die(Entity * entity) {
 	entity_remove(entity);
 }
 
-void entity_view(Entity * entity, List * list) {
-	resolve_entity_view(list, entity);
+boolean entity_can_see(Entity * entity, Entity * otherEntity) {
+	boolean in;
+	List * list = new_list(sizeof(Square *));
+	resolve_entity_view(entity, list);
+	in = list_contains(list, &(otherEntity->square));
+	list_free(list);
+	return in;
 }
 
-boolean entity_can_see(Entity * entity, Entity * otherEntity) {
-	List * list = new_list(sizeof(Square *));
-	resolve_entity_view(list, entity);
-	return list_contains(list, &(otherEntity->square));
+boolean entity_can_attack(Entity * entity, Entity * otherEntity) {
+	Square * square;
+	switch (entity->weapon) {
+		case MELEE:
+			square = get_near_square(entity->square, entity->direction);
+			return square != NULL && square->type != WALL && square->entity == otherEntity;
+		case RANGED:
+		case MAGIC:
+			square = entity->square;
+			while (1) {
+				square = get_near_square(square, entity->direction);
+				if (square == NULL || square->type == WALL) {
+					return false;
+				} else if (square->entity == otherEntity) {
+					return true;
+				}
+			}
+		case NONE:
+		default:
+			return false;
+	}
 }

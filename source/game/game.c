@@ -15,11 +15,13 @@
 #include "entity.h"
 #include "game.h"
 #include "maze.h"
+#include "path_resolver.h"
 #include "player.h"
 
 //librairies utilitaires
 #include "../utility/geo.h"
 #include "../utility/math.h"
+#include "../utility/stack.h"
 #include "../utility/time.h"
 
 void game_init() {
@@ -71,25 +73,24 @@ void new_level() {
 
 void turn() {
 	Direction direction;
+	Stack * path = new_stack(sizeof(Direction));
 	Entity * entity;
 	for (list_begin(g_entities) ; !list_out(g_entities) ; list_next(g_entities)) {
 		list_get_value(g_entities, &entity);
 		switch (entity->type) {
 			case GOBLIN:
 			case GHOST:
-				/*for (i = 0 ; i < 4 ; i++) {
-					direction = get_random_direction();
-					if (entity_can_move(entity, direction)) {
-						break;
+				if (entity_can_see(entity, g_player)) {
+					resolve_path(entity->square, g_player->square, path);
+					if (!stack_empty(path)) {
+						stack_pop(path, &direction);
+						entity_move(entity, direction);
+					}
+					stack_clear(path);
+					if (entity_can_attack(entity, g_player)) {
+						entity_attack(entity);
 					}
 				}
-				if (i < 5) {
-					if (entity->direction != direction) {
-						entity_set_direction(entity, direction);
-					}
-					entity_move(entity, direction);
-				}*/
-				entity_attack(entity);
 			case PLAYER:
 				if (entity->square->type == FIRE) {
 					entity_hurt(entity, 10);

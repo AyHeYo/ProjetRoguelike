@@ -16,7 +16,7 @@
 typedef struct StackElement StackElement;
 
 struct Stack {
-	QueueElement * top;
+	StackElement * top;
 	unsigned int size;
 	unsigned int size_of_elements;
 };
@@ -36,8 +36,8 @@ static StackElement * element_free(StackElement * element) {
 Stack * new_stack(unsigned int size_of_elements) {
 	Stack * stack = malloc(sizeof(Stack));
 	stack->top = NULL;
-	queue->size = 0;
-	queue->size_of_elements = size_of_elements;
+	stack->size = 0;
+	stack->size_of_elements = size_of_elements;
 	return stack;
 }
 
@@ -64,7 +64,7 @@ void stack_push(Stack * stack, void * value) {
 	stack->size++;
 }
 
-void stack_pop(Stack * queue, void * pointer) {
+void stack_pop(Stack * stack, void * pointer) {
 	memcpy(pointer, stack->top->value, stack->size_of_elements);
 	stack->top = element_free(stack->top);
 	stack->size--;
@@ -72,7 +72,7 @@ void stack_pop(Stack * queue, void * pointer) {
 
 void stack_remove(Stack * stack) {
 	stack->top = element_free(stack->top);
-	queue->size--;
+	stack->size--;
 }
 
 void stack_get(Stack * stack, void * pointer) {
@@ -82,5 +82,5 @@ void stack_get(Stack * stack, void * pointer) {
 void stack_clear(Stack * stack) {
 	for ( ; stack->top != NULL ; stack->top = element_free(stack->top)) {
 	}
-	queue->size = 0;
+	stack->size = 0;
 }

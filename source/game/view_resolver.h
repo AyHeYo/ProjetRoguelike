@@ -7,6 +7,6 @@
 
 #include "../utility/list.h"
 
-void resolve_entity_view(List * list, Entity * entity);
+void resolve_entity_view(Entity * entity, List * list);
 
 #endif

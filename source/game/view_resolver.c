@@ -1,4 +1,6 @@
 
+#include <stddef.h>
+
 #include "direction.h"
 #include "entity.h"
 #include "maze.h"
@@ -6,79 +8,84 @@
 #include "../utility/boolean.h"
 #include "../utility/list.h"
 
-static void resolve_square(List * list, Square * square) {
-	Square * near, temp;
-	Location sLocation, pLocation;
+static Entity * viewer;
+
+static Location viewer_location;
+
+static List * squares;
+
+static void resolve_square(Square * square) {
+	Square * near, * temp;
+	Location location;
 	boolean contain;
-	if (!list_contains(list, &square)) {
-		list_add_end(list, &square);
+	if (!list_contains(squares, &square)) {
+		list_add_end(squares, &square);
 		if (square->type != WALL) {
-			pLocation = get_square_location(g_player->square);
 			near = get_near_square(square, NORTH);
 			if (near != NULL) {
-				sLocation = get_square_location(near);
-				if (sLocation.column == pLocation.column) {
-					resolve_square(list, square);
+				location = get_square_location(near);
+				if (location.column == viewer_location.column) {
+					resolve_square(near);
 				} else {
 					temp = get_near_square(near, EAST);
-					contain = temp != NULL && list_contains(list, temp);
+					contain = temp != NULL && list_contains(squares, temp);
 					if (!contain) {
 						temp = get_near_square(near, WEST);
-						contain = temp != NULL && list_contains(list, temp);
+						contain = temp != NULL && list_contains(squares, temp);
 					}
 					if (contain) {
-						resolve_square(list, square);
+						resolve_square(near);
 					}
 				}
 			}
 			near = get_near_square(square, SOUTH);
 			if (near != NULL) {
-				sLocation = get_square_location(near);
-				if (sLocation.column == pLocation.column) {
-					resolve_square(list, square);
+				location = get_square_location(near);
+				if (location.column == viewer_location.column) {
+					resolve_square(near);
 				} else {
 					temp = get_near_square(near, EAST);
-					contain = temp != NULL && list_contains(list, temp);
+					contain = temp != NULL && list_contains(squares, temp);
 					if (!contain) {
 						temp = get_near_square(near, WEST);
-						contain = temp != NULL && list_contains(list, temp);
+						contain = temp != NULL && list_contains(squares, temp);
 					}
 					if (contain) {
-						resolve_square(list, square);
+						resolve_square(near);
 					}
 				}
 			}
 			near = get_near_square(square, EAST);
 			if (near != NULL) {
-				sLocation = get_square_location(near);
-				if (sLocation.row == pLocation.row) {
-					resolve_square(list, square);
+				location = get_square_location(near);
+				if (location.row == viewer_location.row) {
+					resolve_square(near);
 				} else {
 					temp = get_near_square(near, NORTH);
-					contain = temp != NULL && list_contains(list, temp);
+					contain = temp != NULL && list_contains(squares, temp);
 					if (!contain) {
 						temp = get_near_square(near, SOUTH);
-						contain = temp != NULL && list_contains(list, temp);
+						contain = temp != NULL && list_contains(squares, temp);
 					}
 					if (contain) {
-						resolve_square(list, square);
+						resolve_square(near);
 					}
 				}
 			}
 			near = get_near_square(square, WEST);
 			if (near != NULL) {
-				sLocation = get_square_location(near);
-				if (sLocation.row == pLocation.row) {
-					resolve_square(list, square);
+				location = get_square_location(near);
+				if (location.row == viewer_location.row) {
+					resolve_square(near);
 				} else {
 					temp = get_near_square(near, NORTH);
-					contain = temp != NULL && list_contains(list, temp);
+					contain = temp != NULL && list_contains(squares, temp);
 					if (!contain) {
 						temp = get_near_square(near, SOUTH);
-						contain = temp != NULL && list_contains(list, temp);
+						contain = temp != NULL && list_contains(squares, temp);
 					}
 					if (contain) {
-						resolve_square(list, square);
+						resolve_square(near);
 					}
 				}
 			}
@@ -86,7 +93,11 @@ static void resolve_square(List * list, Square * square) {
 	}
 }
 
-void resolve_entity_view(List * list, Entity * entity) {
+void resolve_entity_view(Entity * entity, List * list) {
 	list_clear(list);
-	resolve_square(list, entity->square);
+	squares = list;
+	viewer = entity;
+	viewer_location = get_square_location(entity->square);
+	resolve_square(entity->square);
+	printf("%i", list_size(list));
 }

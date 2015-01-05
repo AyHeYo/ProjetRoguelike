@@ -1,4 +1,6 @@
 
+#include <stdlib.h>
+
 #include "direction.h"
 #include "maze.h"
 
@@ -26,7 +28,7 @@ static List * founds;
 static void free_branch(Branch * branch) {
 	Branch * sub;
 	for (list_begin(branch->branches) ; !list_out(branch->branches) ; list_next(branch->branches)) {
-		list_get_value(&sub);
+		list_get_value(branch->branches, &sub);
 		free_branch(sub);
 	}
 	list_free(branch->branches);
@@ -34,59 +36,59 @@ static void free_branch(Branch * branch) {
 
 static void resolve_branches() {
 	Square * near;
-	Branch * branch, new;
+	Branch * branch, * new;
 	List * temp = new_list(sizeof(Branch *));
 	for (list_begin(to_resolve) ; !list_out(to_resolve) ; list_next(to_resolve)) {
-		list_get_value(list, &branch);
+		list_get_value(to_resolve, &branch);
 		near = get_near_square(branch->square, NORTH);
-		if (near != NULL && near->type != WALL || near == destination) {
+		if (((near != NULL) && (near->type != WALL)) || (near == destination)) {
 			new = malloc(sizeof(Branch));
 			new->branches = new_list(sizeof(Branch *));
 			new->from = branch;
 			new->square = near;
-			new->destination = NORTH;
-			list_add(branch->branches, &new);
+			new->direction = NORTH;
+			list_add_end(branch->branches, &new);
 			list_add_end(temp, &new);
-			if (near = destination) {
+			if (near == destination) {
 				list_add_end(founds, &new);
 			}
 		}
 		near = get_near_square(branch->square, SOUTH);
-		if (near != NULL && near->type != WALL || near == destination) {
+		if (((near != NULL) && (near->type != WALL)) || (near == destination)) {
 			new = malloc(sizeof(Branch));
 			new->branches = new_list(sizeof(Branch *));
 			new->from = branch;
 			new->square = near;
-			new->destination = SOUTH;
-			list_add(branch->branches, &new);
+			new->direction = SOUTH;
+			list_add_end(branch->branches, &new);
 			list_add_end(temp, &new);
-			if (near = destination) {
+			if (near == destination) {
 				list_add_end(founds, &new);
 			}
 		}
 		near = get_near_square(branch->square, EAST);
-		if (near != NULL && near->type != WALL || near == destination) {
+		if (((near != NULL) && (near->type != WALL)) || (near == destination)) {
 			new = malloc(sizeof(Branch));
 			new->branches = new_list(sizeof(Branch *));
 			new->from = branch;
 			new->square = near;
-			new->destination = EAST;
-			list_add(branch->branches, &new);
+			new->direction = EAST;
+			list_add_end(branch->branches, &new);
 			list_add_end(temp, &new);
-			if (near = destination) {
+			if (near == destination) {
 				list_add_end(founds, &new);
 			}
 		}
 		near = get_near_square(branch->square, WEST);
-		if (near != NULL && near->type != WALL || near == destination) {
+		if (((near != NULL) && (near->type != WALL)) || (near == destination)) {
 			new = malloc(sizeof(Branch));
 			new->branches = new_list(sizeof(Branch *));
 			new->from = branch;
 			new->square = near;
-			new->destination = WEST;
-			list_add(branch->branches, &new);
+			new->direction = WEST;
+			list_add_end(branch->branches, &new);
 			list_add_end(temp, &new);
-			if (near = destination) {
+			if (near == destination) {
 				list_add_end(founds, &new);
 			}
 		}
@@ -113,7 +115,7 @@ static void to_stack(Stack * stack) {
 	}
 	list_get_value(founds, &branch);
 	for ( ; branch != NULL ; branch = branch->from) {
-		stack_push(&(branch->destination));
+		stack_push(stack, &(branch->direction));
 	}
 }
 
