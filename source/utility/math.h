@@ -19,6 +19,10 @@
  */
 int rand_between(int a, int b);
 
+/**
+ * Retourne vrai ou faux au hasard.
+ * @return Vrai ou faux
+ */
 boolean rand_boolean();
 
 /**
@@ -29,6 +33,12 @@ boolean rand_boolean();
  */
 char mins(short a, short b);
 
+/**
+ * Retourne le plus grand de deux nombres entiers codés sur un short.
+ * @param a Le premier nombre.
+ * @param b Le deuxième nombre.
+ * @return Le plus grand des deux nombres.
+ */
 char maxs(short a, short b);
 
 #endif

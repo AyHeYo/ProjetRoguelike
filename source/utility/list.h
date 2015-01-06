@@ -173,6 +173,12 @@ void list_get_first(List * list, void * pointer);
  */
 void list_get_last(List * list, void * pointer);
 
+/**
+ * Cherche si la liste contient la valeur donnée.
+ * @param list La liste.
+ * @param value Le pointeur vers la valeur à tester.
+ * @return Si la liste contient la valeur donnée.
+ */
 boolean list_contains(List * list, void * value);
 
 #endif
