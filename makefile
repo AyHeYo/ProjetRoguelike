@@ -51,6 +51,12 @@ debug: clean $(OBJDIRS) $(OBJ)
 	$(CC) $(FLAGS) -g $(filter %.o,$^) $(LIBS) -o $(NAME).exe -o $(NAME)_debug.exe
 	gdb -e $(NAME)_debug.exe
 
+test: $(OBJDIRS) $(OBJ)
+	$(CC) $(FLAGS) $(TESTDIR)/test.c
+	$(CC) $(FLAGS) $(filter %.o,$^) test.o $(LIBS) -lcunit -o $(NAME)_test.exe
+	rm test.o
+	./$(NAME)_test.exe
+
 #génère la documentation
 docgen:
 	rm -rf ./$(DOCDIR)
