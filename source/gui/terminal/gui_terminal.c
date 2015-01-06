@@ -193,6 +193,9 @@ void gui_warn(Event * event) {
 			gui_clear_message();
 			refresh();
 			break;
+		case PLAYER_VIEW:
+				display_maze();
+			break;
 		case STOP_GAME:
 			gui_set_message("Au revoir !");
 			gui_stop();

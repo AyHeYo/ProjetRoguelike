@@ -101,8 +101,7 @@ static void print_foreground(Square * square) {
  * @param square Le type de case à afficher.
  */
 static void print_square(Square * square) {
-	//if (list_contains(g_player_view, &square)) {
-	if (true) {
+	if (list_contains(g_player_view, &square)) {
 		set_background_color(square);
 		print_foreground(square);
 	} else {
