@@ -5,15 +5,15 @@
  * @date 10 décembre 2014
  */
 
-#ifndef VIEW_TERMINAL_H
+#ifndef GUI_TERMINAL_TERMINAL_H
 
-#define VIEW_TERMINAL_H
+#define GUI_TERMINAL_TERMINAL_H
 
 //librairies du système
 #include <termios.h>
 
 //librairies utilitaires
-#include "../utility/boolean.h"
+#include "../../utility/boolean.h"
 
 /**
  * Structure représentant la taille d'un terminal (en nombre de colonne et de lignes de caractères).

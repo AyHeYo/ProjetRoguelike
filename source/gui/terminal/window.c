@@ -11,9 +11,11 @@
 
 //librairies de la vue
 #include "ansi.h"
-#include "interface.h"
+#include "maze.h"
 #include "terminal.h"
 #include "window.h"
+
+#include "../../game/game.h"
 
 /**
  * Marge entre la fenre et le bord du terminal.
@@ -28,7 +30,7 @@
 /**
  * Le message actuel affiché dans la fenêtre.
  */
-static char * message;
+static char * message = " ";
 
 void print_window_top() {
 	const int width = get_terminal_width() - 2 * WINDOW_MARGIN;
@@ -106,13 +108,11 @@ void set_message(char msg[]) {
 	message = msg;
 }
 
-void clear_message() {
-	message = " ";
-}
-
 void display_message() {
 	const int width = get_terminal_width() - 2 * WINDOW_MARGIN, length = strlen(message);
 	int i, lines = -1;
+	ansi_set_position(1 + 5 + g_maze_height + WINDOW_TOP_MARGIN, 1);
+	ansi_clear_screen_after();
 	print_window_top();
 	for (i = 0 ; i < length ; i++) {
 		if (i % (width - 4) == 0) {
@@ -126,5 +126,6 @@ void display_message() {
 	}
 	putchar('\n');
 	print_window_bottom();
-	g_window_height = NB_LINES_ON_EMPTY_MSG + lines;
+	g_window_height = NB_LINES_ON_EMPTY_MSG + WINDOW_TOP_MARGIN + lines;
+	fflush(stdout);
 }

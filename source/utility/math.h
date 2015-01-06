@@ -9,6 +9,8 @@
 
 #define UTILITY_MATH_H
 
+#include "boolean.h"
+
 /**
  * Retourne un entier au hasard compris entre a et b inclu.
  * @param a Le minimum (inclu).
@@ -16,6 +18,8 @@
  * @return Un entier au hasard entre a et b inclu.
  */
 int rand_between(int a, int b);
+
+boolean rand_boolean();
 
 /**
  * Retourne le plus petit de deux nombres entiers codés sur un short.

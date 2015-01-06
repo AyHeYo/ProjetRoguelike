@@ -12,12 +12,12 @@
 #include "ansi.h"
 
 //bibliothèques utilitaires
-#include "../utility/boolean.h"
+#include "../../utility/boolean.h"
 
 /**
  * La séquence d'échappement.
  */
-const char CSI[5] = "\033[";
+static const char CSI[5] = "\033[";
 
 void ansi_up(unsigned int n) {
 	printf("%s%uA", CSI, n);

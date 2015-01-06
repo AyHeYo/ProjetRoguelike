@@ -7,16 +7,17 @@
  * @date 16 décembre 2014
  */
 
-#ifndef MODEL_ENTITY_H
+#ifndef GAME_ENTITY_H
 
-#define MODEL_ENTITY_H
+#define GAME_ENTITY_H
 
 //librairies du modèle
+#include "direction.h"
 #include "maze.h"
 
 //librairies utilitaires
 #include "../utility/boolean.h"
-#include "../utility/direction.h"
+#include "../utility/list.h"
 
 /**
  * Type énuméré définissant les différents types d'entité.
@@ -123,6 +124,8 @@ struct Entity {
 	struct Square * square;
 };
 
+List * g_entities;
+
 /**
  * Créé une nouvelle entité.
  * @param type g_maze_heightLe type de l'entité.
@@ -164,5 +167,21 @@ void entity_hurt(Entity * entity, short amount);
  * @param entity L'entité.
  */
 void entity_attack(Entity * entity);
+
+void entity_set_direction(Entity * entity, Direction direction);
+
+boolean entity_can_spawn(struct Square * square);
+
+void entity_spawn(Entity * entity, struct Square * square, Direction direction);
+
+void entity_despawn(Entity * entity);
+
+void entity_remove(Entity * entity);
+
+void entity_die(Entity * entity);
+
+boolean entity_can_see(Entity * entity, Entity * otherEntity);
+
+boolean entity_can_attack(Entity * entity, Entity * otherEntity);
 
 #endif

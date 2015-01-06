@@ -5,9 +5,9 @@
  * @date 2 décembre 2014
  */
 
-#ifndef GEO_H
+#ifndef UTILITY_GEO_H
 
-#define GEO_H
+#define UTILITY_GEO_H
 
 /**
  * Structure représentant la localisation d'une case sur une matrice.
@@ -17,12 +17,12 @@ typedef struct {
 	/**
 	 * La ligne.
 	 */
-	int line;
+	int row;
 
 	/**
 	 * La colonne.
 	 */
-	int row;
+	int column;
 } Location;
 
 /**

@@ -11,11 +11,16 @@ NAME = roguelike
 #le nom du dossier contenant les sources
 SRCDIR = source
 
+#le nom du dossier contenant les objets de compilation
+OBJDIR = o
+
 #les fichiers source
-SRC = $(wildcard $(SRCDIR)/*/*.c)
+SRC = $(shell find $(SRCDIR)/ -name *.c)
 
 #les fichiers compilés
-OBJ = $(SRC:.c=.o)
+OBJ = $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRC))
+
+OBJDIRS = $(dir $(OBJ))
 
 #le nom du dossier contenant les sources des tests
 TESTDIR = test
@@ -25,22 +30,25 @@ DOCDIR = doc
 
 LIBS = -lpthread
 
-build: $(OBJ)
-	$(CC) $(FLAGS) $^ $(LIBS) -o $(NAME).exe
+build: $(OBJDIRS) $(OBJ)
+	$(CC) $(FLAGS) $(filter %.o,$^) $(LIBS) -o $(NAME).exe
 
-%.o: %.c
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
 	$(CC) $(FLAGS) -c $< -o $@
 
+%/:
+	mkdir -p $@
+
 clean:
-	rm -rf $(SRCDIR)/*/*.o *.exe
+	rm -rf $(OBJDIR) *.exe
 
 rebuild: clean build
 
 run: build
 	./$(NAME).exe
 
-debug:
-	$(CC) $(FLAGS) -g $(SRC) -o $(NAME)
+debug: clean $(OBJDIRS) $(OBJ)
+	$(CC) $(FLAGS) -g $(filter %.o,$^) $(LIBS) -o $(NAME).exe -o $(NAME)_debug.exe
 	gdb -e $(NAME)_debug.exe
 
 #génère la documentation

@@ -5,9 +5,9 @@
  * @date 27 novembre 2014
  */
 
-#ifndef BOOLEAN_H
+#ifndef UTILITY_BOOLEAN_H
 
-#define BOOLEAN_H
+#define UTILITY_BOOLEAN_H
 
 /**
  * Type booléen.

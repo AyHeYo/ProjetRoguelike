@@ -8,9 +8,15 @@
 //librairies du système
 #include <stdlib.h>
 
+#include "boolean.h"
+
 int rand_between(int a, int b) {
-	a += 1;
+	b += 1;
 	return (rand() % (b - a)) + a;
+}
+
+boolean rand_boolean() {
+	return rand() % 2;
 }
 
 char mins(short a, short b) {
