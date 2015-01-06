@@ -69,6 +69,24 @@ void new_level() {
 	} while (!entity_can_spawn(g_maze->squares + (row * g_maze->size + column)));
 	entity = new_entity(GOBLIN);
 	entity_spawn(entity, g_maze->squares + (row * g_maze->size + column), NORTH);
+	do {
+		row = rand_between(0, g_maze->size - 1);
+		column = rand_between(0, g_maze->size - 1);
+	} while (!entity_can_spawn(g_maze->squares + (row * g_maze->size + column)));
+	entity = new_entity(GOBLIN);
+	entity_spawn(entity, g_maze->squares + (row * g_maze->size + column), NORTH);
+	do {
+		row = rand_between(0, g_maze->size - 1);
+		column = rand_between(0, g_maze->size - 1);
+	} while (!entity_can_spawn(g_maze->squares + (row * g_maze->size + column)));
+	entity = new_entity(GOBLIN);
+	entity_spawn(entity, g_maze->squares + (row * g_maze->size + column), NORTH);
+	do {
+		row = rand_between(0, g_maze->size - 1);
+		column = rand_between(0, g_maze->size - 1);
+	} while (!entity_can_spawn(g_maze->squares + (row * g_maze->size + column)));
+	entity = new_entity(GOBLIN);
+	entity_spawn(entity, g_maze->squares + (row * g_maze->size + column), NORTH);
 }
 
 void turn() {
@@ -93,8 +111,10 @@ void turn() {
 							}
 							if (entity_can_attack(entity, g_player)) {
 								entity_attack(entity);
-							} else if (entity_can_move(entity, direction)) {
-								entity_move(entity, direction);
+							} else {
+								if (entity_can_move(entity, direction)) {
+									entity_move(entity, direction);
+								}
 								if (!stack_empty(path)) {
 									stack_pop(path, &direction);
 									if (direction != entity->direction) {

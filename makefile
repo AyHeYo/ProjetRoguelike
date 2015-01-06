@@ -47,8 +47,8 @@ rebuild: clean build
 run: build
 	./$(NAME).exe
 
-debug:
-	$(CC) $(FLAGS) -g $(SRC) -o $(NAME)
+debug: clean $(OBJDIRS) $(OBJ)
+	$(CC) $(FLAGS) -g $(filter %.o,$^) $(LIBS) -o $(NAME).exe -o $(NAME)_debug.exe
 	gdb -e $(NAME)_debug.exe
 
 #génère la documentation

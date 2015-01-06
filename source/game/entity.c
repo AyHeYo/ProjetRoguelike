@@ -28,7 +28,7 @@ Entity * new_entity(EntityType type) {
 		case PLAYER:
 			entity->max_life = 100;
 			entity->life = 100;
-			entity->weapon = MELEE;
+			entity->weapon = RANGED;
 			break;
 		case GOBLIN:
 			entity->max_life = 20;

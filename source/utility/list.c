@@ -195,7 +195,7 @@ void list_remove_value(List * list, void * value) {
 	for (list_begin(list) ; !list_out(list) ; ) {
 		if (memcmp(list->current->value, value, list->size_of_elements) == 0) {
 			if (list->current == current) {
-				list->current = current->next;
+				current = current->next;
 			}
 			list_remove(list);
 		} else {
