@@ -44,8 +44,7 @@ Queue * new_queue(unsigned int size_of_elements) {
 }
 
 void queue_free(Queue * queue) {
-	QueueElement * element;
-	for (element = queue->first ; element != NULL ; element = element_free(element)) {
+	for ( ; queue->first != NULL ; queue->first = element_free(queue->first)) {
 	}
 	free(queue);
 }
@@ -94,8 +93,8 @@ void queue_get(Queue * queue, void * pointer) {
 }
 
 void queue_clear(Queue * queue) {
-	QueueElement * element;
-	for (element = queue->first ; element != NULL ; element = element_free(element)) {
+	for ( ; queue->first != NULL ; queue->first = element_free(queue->first)) {
 	}
+	queue->last = NULL;
 	queue->size = 0;
 }

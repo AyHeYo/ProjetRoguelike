@@ -208,6 +208,7 @@ void list_remove_value(List * list, void * value) {
 void list_clear(List * list) {
 	for (list_begin(list) ; !list_out(list) ; list->current = element_free(list->current)) {
 	}
+	list->first = list->last = NULL;
 	list->size = 0;
 }
 
