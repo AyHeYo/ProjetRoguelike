@@ -17,4 +17,6 @@
  */
 Entity * g_player;
 
+List * g_player_view;
+
 #endif

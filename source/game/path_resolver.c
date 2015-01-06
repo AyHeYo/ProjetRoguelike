@@ -45,7 +45,7 @@ static void branch_free(Branch * branch) {
 	free(branch);
 }
 
-Branch * root;
+static Branch * root;
 
 static Square * destination;
 

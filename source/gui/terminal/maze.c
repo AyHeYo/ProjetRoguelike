@@ -17,6 +17,10 @@
 //librairies du modèle
 #include "../../game/game.h"
 #include "../../game/maze.h"
+#include "../../game/player.h"
+#include "../../game/view_resolver.h"
+
+#include "../../utility/list.h"
 
 static void set_background_color(Square * square) {
 	switch (square->type) {
@@ -97,8 +101,14 @@ static void print_foreground(Square * square) {
  * @param square Le type de case à afficher.
  */
 static void print_square(Square * square) {
-	set_background_color(square);
-	print_foreground(square);
+	//if (list_contains(g_player_view, &square)) {
+	if (true) {
+		set_background_color(square);
+		print_foreground(square);
+	} else {
+		ansi_set_bg_color(ANSI_GREY);
+		putchar(' ');
+	}
 }
 
 void update_square(Square * square) {
@@ -134,7 +144,7 @@ void display_maze() {
 		for (i = 0 ; i < g_maze->size ; i++) {
 			ansi_set_column((width - g_maze->size) / 2);
 			for (j = 0 ; j < g_maze->size ; j++) {
-				print_square(&(g_maze->squares[i * g_maze->size + j]));
+				print_square(g_maze->squares + (i * g_maze->size + j));
 			}
 			ansi_set_bg_color(ANSI_BLACK);
 			putchar('\n');
