@@ -13,6 +13,7 @@
 //librairies du modèle
 #include "direction.h"
 #include "entity.h"
+#include "event.h"
 #include "game.h"
 #include "maze.h"
 #include "path_resolver.h"
@@ -41,6 +42,7 @@ void game_end() {
 	list_free(g_entities);
 	g_entities = NULL;
 	free_maze();//libération de l'espace mémoire alloué au labyrinthe
+	dispatch_new_event(MAZE_GENERATE, NULL);
 }
 
 void new_game() {
@@ -66,6 +68,8 @@ void new_level() {
 		column = rand_between(0, g_maze->size - 1);
 	} while (!entity_can_spawn(g_maze->squares + (row * g_maze->size + column)));
 	entity_spawn(g_player, g_maze->squares + (row * g_maze->size + column), NORTH);
+	resolve_entity_view(g_player, g_player_view);
+	dispatch_new_event(MAZE_GENERATE, NULL);
 	//placement des monstres
 	do {
 		row = rand_between(0, g_maze->size - 1);
@@ -97,7 +101,6 @@ void turn() {
 	Direction direction;
 	Stack * path;
 	Entity * entity;
-	resolve_entity_view(g_player, g_player_view);
 	for (list_begin(g_entities) ; !list_out(g_entities) ; list_next(g_entities)) {
 		list_get_value(g_entities, &entity);
 		switch (entity->type) {

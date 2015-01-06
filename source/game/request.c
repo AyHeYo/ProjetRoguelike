@@ -46,6 +46,8 @@ void request(Request request) {
 			}
 			if (entity_can_move(g_player, NORTH)) {
 				entity_move(g_player, NORTH);
+				resolve_entity_view(g_player, g_player_view);
+				dispatch_new_event(MAZE_GENERATE, NULL);
 				turn();
 			}
 			break;
@@ -55,6 +57,8 @@ void request(Request request) {
 			}
 			if (entity_can_move(g_player, SOUTH)) {
 				entity_move(g_player, SOUTH);
+				resolve_entity_view(g_player, g_player_view);
+				dispatch_new_event(MAZE_GENERATE, NULL);
 				turn();
 			}
 			break;
@@ -64,6 +68,8 @@ void request(Request request) {
 			}
 			if (entity_can_move(g_player, EAST)) {
 				entity_move(g_player, EAST);
+				resolve_entity_view(g_player, g_player_view);
+				dispatch_new_event(MAZE_GENERATE, NULL);
 				turn();
 			}
 			break;
@@ -73,6 +79,8 @@ void request(Request request) {
 			}
 			if (entity_can_move(g_player, WEST)) {
 				entity_move(g_player, WEST);
+				resolve_entity_view(g_player, g_player_view);
+				dispatch_new_event(MAZE_GENERATE, NULL);
 				turn();
 			}
 			break;

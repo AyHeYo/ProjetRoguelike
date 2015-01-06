@@ -13,6 +13,8 @@
 #include "entity.h"
 #include "event.h"
 #include "maze.h"
+#include "player.h"
+#include "view_resolver.h"
 
 //librairies utilitaires
 #include "../utility/geo.h"
@@ -134,14 +136,12 @@ void generate_maze() {
 	//choix de leur taille et de leur placement...
 	
 	//génération des couloirs
-	dispatch_new_event(MAZE_GENERATE, NULL);
 }
 
 void free_maze() {
 	free_squares();
 	free(g_maze);
 	g_maze = NULL;
-	dispatch_new_event(MAZE_GENERATE, NULL);
 }
 
 Square * get_near_square(Square * square, Direction direction) {

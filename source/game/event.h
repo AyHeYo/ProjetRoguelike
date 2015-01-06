@@ -20,6 +20,7 @@ typedef enum {
 	ENTITY_SPAWN,
 	MAIN_MENU,
 	MAZE_GENERATE,
+	PLAYER_VIEW,
 	STOP_GAME
 } EventType;
 
