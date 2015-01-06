@@ -20,6 +20,7 @@
 
 //librairies utilitaires
 #include "../utility/geo.h"
+#include "../utility/list.h"
 #include "../utility/math.h"
 #include "../utility/stack.h"
 #include "../utility/time.h"
@@ -29,12 +30,14 @@ void game_init() {
 	g_game_running = false;
 	g_maze = NULL;
 	g_player = NULL;
+	g_player_view = NULL;
 	g_entities = NULL;
 }
 
 void game_end() {
 	g_game_running = false;
 	g_player = NULL;
+	g_player_view = NULL;
 	list_free(g_entities);
 	g_entities = NULL;
 	free_maze();//libération de l'espace mémoire alloué au labyrinthe
@@ -45,6 +48,7 @@ void new_game() {
 	g_level = 0;
 	g_entities = new_list(sizeof(Entity *));
 	g_player = new_entity(PLAYER);//céation du joueur
+	g_player_view = new_list(sizeof(Square *));
 	new_level();
 }
 
@@ -93,6 +97,7 @@ void turn() {
 	Direction direction;
 	Stack * path;
 	Entity * entity;
+	resolve_entity_view(g_player, g_player_view);
 	for (list_begin(g_entities) ; !list_out(g_entities) ; list_next(g_entities)) {
 		list_get_value(g_entities, &entity);
 		switch (entity->type) {

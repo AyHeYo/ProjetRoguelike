@@ -1,6 +1,4 @@
 
-#include <math.h>
-
 #include "direction.h"
 
 #include "../utility/math.h"
