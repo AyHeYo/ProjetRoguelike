@@ -1,7 +1,7 @@
 /**
  * @file utility/list.h
- * Fichier définissant les fonctions permettant d'utiliser des liste génériques.
- * La généricité est rendue possible en connaissant la taille des éléments que contiendra la liste.
+ * Fichier définissant les fonctions permettant d'utiliser des files génériques.
+ * La généricité est rendue possible en connaissant la taille des éléments que contiendra la file.
  * La liste ne doît contenir que des éléments de même type.
  * Lorsque des éléments sont ajoutés à la liste, ils sont copiés.
  * @author Hector Basset
@@ -22,63 +22,62 @@
 typedef struct Queue Queue;
 
 /**
- * Créé une liste.
- * @param size_of_elements La taille des éléments qui seront stockés dans la liste.
- * @return Le pointeur sur la liste créée.
+ * Créé une file.
+ * @param size_of_elements La taille des éléments qui seront stockés dans la file.
+ * @return Le pointeur sur la file créée.
  */
 Queue * new_queue(unsigned int size_of_elements);
 
 /**
- * Supprime la liste.
- * @param list La liste.
+ * Supprime la file.
+ * @param queue La file.
  */
 void queue_free(Queue * queue);
 
 /**
- * Permet de vérifier si la liste est vide.
- * @param list La liste.
- * @return Si la liste est vide ou non.
+ * Permet de vérifier si la file est vide.
+ * @param queue La file.
+ * @return Si la file est vide ou non.
  */
 boolean queue_empty(Queue * queue);
 
 /**
- * Permet d'obtenir la taille de la liste.
- * @param list La liste.
- * @return La taille de la liste.
+ * Permet d'obtenir la taille de la file.
+ * @param queue La file.
+ * @return La taille de la file.
  */
 unsigned int queue_size(Queue * queue);
 
 /**
- * Retourne la valeur de l'élément courant.
- * @param list La liste.
- * @param pointer L'addresse à laquelle la valeur de l'élément sera stockée.
+ * Ajoute un élément à la fin de la file.
+ * @param queue La file.
+ * @param value Le pointeur vers la valeur à ajouter.
  */
 void queue_add(Queue * queue, void * value);
 
 /**
- * Retourne la valeur de l'élément courant.
- * @param list La liste.
+ * Retire l'élément en tête de la file et le stocke à l'adresse indiquée.
+ * @param queue La file.
  * @param pointer L'addresse à laquelle la valeur de l'élément sera stockée.
  */
 void queue_pop(Queue * queue, void * pointer);
 
 /**
- * Retourne la valeur de l'élément courant.
- * @param list La liste.
- * @param pointer L'addresse à laquelle la valeur de l'élément sera stockée.
+ * Retire l'élément en tête de la file.
+ * @param queue La file.
  */
 void queue_remove(Queue * queue);
 
 /**
- * Retourne la valeur de l'élément courant.
- * @param list La liste.
+ * Permet d'acceder à l'élément en tête de la file.
+ * @param queue La file.
  * @param pointer L'addresse à laquelle la valeur de l'élément sera stockée.
  */
 void queue_get(Queue * queue, void * pointer);
 
 /**
- * Vide la liste.
- * @param list La liste.
+ * Vide la file.
+ * @param queue La file.
  */
 void queue_clear(Queue * queue);
 

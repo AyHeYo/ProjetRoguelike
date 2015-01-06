@@ -1,7 +1,7 @@
 /**
  * @file utility/list.h
- * Fichier définissant les fonctions permettant d'utiliser des liste génériques.
- * La généricité est rendue possible en connaissant la taille des éléments que contiendra la liste.
+ * Fichier définissant les fonctions permettant d'utiliser des piles génériques.
+ * La généricité est rendue possible en connaissant la taille des éléments que contiendra la pile.
  * La liste ne doît contenir que des éléments de même type.
  * Lorsque des éléments sont ajoutés à la liste, ils sont copiés.
  * @author Hector Basset
@@ -22,63 +22,63 @@
 typedef struct Stack Stack;
 
 /**
- * Créé une liste.
- * @param size_of_elements La taille des éléments qui seront stockés dans la liste.
- * @return Le pointeur sur la liste créée.
+ * Créé une pile.
+ * @param size_of_elements La taille des éléments qui seront stockés dans la pile.
+ * @return Le pointeur sur la pile créée.
  */
 Stack * new_stack(unsigned int size_of_elements);
 
 /**
- * Supprime la liste.
- * @param list La liste.
+ * Supprime la pile.
+ * @param stack La pile.
  */
 void stack_free(Stack * stack);
 
 /**
- * Permet de vérifier si la liste est vide.
- * @param list La liste.
- * @return Si la liste est vide ou non.
+ * Permet de vérifier si la pile est vide.
+ * @param stack La pile.
+ * @return Si la pile est vide ou non.
  */
 boolean stack_empty(Stack * stack);
 
 /**
- * Permet d'obtenir la taille de la liste.
- * @param list La liste.
- * @return La taille de la liste.
+ * Permet d'obtenir la taille de la pile.
+ * @param stack La pile.
+ * @return La taille de la pile.
  */
 unsigned int stack_size(Stack * stack);
 
 /**
- * Retourne la valeur de l'élément courant.
- * @param list La liste.
- * @param pointer L'addresse à laquelle la valeur de l'élément sera stockée.
+ * Empile un élément au sommet de la pile.
+ * @param stack La pile.
+ * @param value Le pointeur vers la valeur à empiler.
  */
 void stack_push(Stack * stack, void * value);
 
 /**
- * Retourne la valeur de l'élément courant.
- * @param list La liste.
+ * Dépile l'élément au sommet de la file et le stocke à l'adresse indiquée.
+ * @param stack La pile.
  * @param pointer L'addresse à laquelle la valeur de l'élément sera stockée.
  */
 void stack_pop(Stack * stack, void * pointer);
 
 /**
- * Retourne la valeur de l'élément courant.
- * @param list La liste.
+ * Retire l'élément au sommet de la pile.
+ * @param stack La pile.
  * @param pointer L'addresse à laquelle la valeur de l'élément sera stockée.
  */
 void stack_remove(Stack * stack);
 
 /**
- * Retourne la valeur de l'élément courant.
- * @param list La liste.
+ * Permet d'acceder à l'élément au sommet de la file.
+ * @param stack La pile.
  * @param pointer L'addresse à laquelle la valeur de l'élément sera stockée.
  */
 void stack_get(Stack * stack, void * pointer);
 
 /**
- * Vide la liste.
- * @param list La liste.
+ * Vide la pile.
+ * @param stack La pile.
  */
 void stack_clear(Stack * stack);
 
